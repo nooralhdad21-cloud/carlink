@@ -58,20 +58,20 @@ function updatePreview() {
             socialContainer.appendChild(item);
         }
     });
-   window.generateQR = function() {
-    var qrDiv = document.getElementById("qrcode");
+    generateQR();
+}
+
+function generateQR() {
+    const qrDiv = document.getElementById("qrcode");
     qrDiv.innerHTML = "";
+    const name = document.getElementById("displayName").innerText;
+    const content = `Name: ${name}\nPhone: ${userData.phone}`;
     
-    // الرابط اللي تريده يفتح لما نمسح الكود
-    var siteUrl = "https://nooralhdad21-cloud.github.io/carlink/";
-    
-    if(typeof QRCode !== "undefined") {
-        new QRCode(qrDiv, {
-            text: siteUrl,
-            width: 160,
-            height: 160
-        });
-    }
+    new QRCode(qrDiv, {
+        text: content,
+        width: 140,
+        height: 140
+    });
 }
 
 function printA4() {
