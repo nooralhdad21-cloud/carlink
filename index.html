@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarLink 2026 - البطاقة الذكية الاحترافية</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <style>
+        /* الأساسيات */
+        :root {
+            --primary-color: #00d2ff;
+            --secondary-color: #3a7bd5;
+            --dark-bg: #121212;
+            --card-bg: linear-gradient(145deg, #1e1e1e, #111111);
+            --text-white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-wrapper {
+            width: 100%;
+            max-width: 800px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        h1 { color: #222; margin-bottom: 30px; text-align: center; }
+
+        /* منطقة الإدخال */
+        .input-group {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+        }
+
+        label { display: block; margin: 10px 0 5px; font-weight: bold; color: #555; }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .phone-flex { display: flex; gap: 10px; direction: ltr; }
+        .phone-flex span { background: #eee; padding: 12px; border-radius: 10px; font-weight: bold; }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            color: white;
+        }
+
+        button:hover { opacity: 0.9; transform: translateY(-2px); }
+        .btn-add { background: #28a745; margin-bottom: 20px; }
+        .btn-print { background: #000; }
+
+        /* تصميم البطاقة الاحترافي */
+        .card-container {
+            perspective: 1000px;
+            margin: 40px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        #preview {
+            width: 380px;
+            min-height: 520px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            color: white;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #preview::before {
+            content: "";
+            position: absolute;
+            top: -10%; left: -10%;
+            width: 50%; height: 50%;
+            background: rgba(0, 210, 255, 0.1);
+            filter: blur(50px);
+            border-radius: 50%;
+        }
+
+        .card-header { font-size: 12px; letter-spacing: 2px; opacity: 0.5; margin-bottom: 30px; text-align: left; }
+        
+        #displayName { 
+            font-size: 28px; 
+            margin: 10px 0; 
+            background: linear-gradient(to right, #fff, var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #displayPhone { font-size: 18px; opacity: 0.8; margin-bottom: 25px; direction: ltr; }
+
+        .social-icons-preview {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .social-item {
+            background: rgba(255,255,255,0.08);
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .social-item img { width: 18px; height: 18px; }
+
+        #qrcode {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-top: 10px;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+        }
+
+        .card-footer { margin-top: 30px; font-size: 10px; opacity: 0.4; }
+
+        /* أدوات التحكم بالصفوف */
+        .social-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .btn-remove { background: #dc3545; padding: 5px 12px; }
+
+        /* تنسيق الطباعة A4 */
+        @media print {
+            body { background: white; padding: 0; }
+            .main-wrapper, h1, .input-group, button, h3, .btn-add { display: none !important; }
+            .card-container { margin: 0; padding-top: 50mm; } /* تظهر في منتصف الصفحة */
+            #preview {
+                box-shadow: none;
+                border: 1px solid #000;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <h1>🚗 CarLink 2026</h1>
+
+    <div id="loginSection" class="input-group">
+        <label>رقم الهاتف (مفتاح العراق)</label>
+        <div class="phone-flex">
+            <span>+964</span>
+            <input type="text" id="loginPhone" placeholder="7701109692">
+        </div>
+        <button onclick="login()">ابدأ التصميم الآن</button>
+    </div>
+
+    <div id="dashboard" style="display:none;">
+        <div class="input-group">
+            <label>الاسم الكامل:</label>
+            <input type="text" id="nameInput" placeholder="مثال: نورالدين صباح" oninput="updatePreview()">
+
+            <label>مواقع التواصل الاجتماعي:</label>
+            <div id="socialInputs">
+                </div>
+            <button class="btn-add" onclick="addSocialRow()">➕ إضافة منصة</button>
+        </div>
+
+        <div style="text-align: center;">
+            <button onclick="printA4()" class="btn-print">🖨️ طباعة البطاقة A4</button>
+            <button onclick="location.reload()" style="background: #666;">🔄 خروج</button>
+        </div>
+
+        <h3 style="text-align: center; margin-top: 40px;">المعاينة الحية</h3>
+        <div class="card-container">
+            <div id="preview">
+                <div class="card-header">CARLINK SMART CARD</div>
+                <h2 id="displayName">نورالدين صباح</h2>
+                <p id="displayPhone">+964 770 110 9692</p>
+                
+                <div id="displaySocial" class="social-icons-preview">
+                    </div>
+
+                <div id="qrcode"></div>
+                
+                <div class="card-footer">
+                    نظام الربط الذكي للسيارات 2026 © <br>
+                    تواصل معي عبر مسح الكود أعلاه
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let userData = {
+        name: "نورالدين صباح",
+        phone: "+9647701109692",
+        social: []
+    };
+
+    const icons = {
+        instagram: 'https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg',
+        whatsapp: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg',
+        telegram: 'https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg',
+        facebook: 'https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg'
+    };
+
+    function login() {
+        const phone = document.getElementById("loginPhone").value.trim();
+        if(phone.length < 9) {
+            alert("يرجى إدخال رقم هاتف صحيح");
+            return;
+        }
+        userData.phone = "+964 " + phone;
+        document.getElementById("loginSection").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+        updatePreview();
+    }
+
+    function addSocialRow() {
+        const container = document.getElementById("socialInputs");
+        const div = document.createElement("div");
+        div.className = "social-row";
+        div.innerHTML = `
+            <select onchange="updatePreview()">
+                <option value="instagram">Instagram</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="telegram">Telegram</option>
+                <option value="facebook">Facebook</option>
+            </select>
+            <input type="text" placeholder="اسم المستخدم" oninput="updatePreview()">
+            <button class="btn-remove" onclick="this.parentElement.remove(); updatePreview();">❌</button>
+        `;
+        container.appendChild(div);
+    }
+
+    function updatePreview() {
+        // تحديث الاسم والهاتف
+        const name = document.getElementById("nameInput").value || "نورالدين صباح";
+        document.getElementById("displayName").innerText = name;
+        document.getElementById("displayPhone").innerText = userData.phone;
+
+        // تحديث السوشيال ميديا
+        const socialContainer = document.getElementById("displaySocial");
+        socialContainer.innerHTML = "";
+        const rows = document.querySelectorAll(".social-row");
+        
+        userData.social = [];
+        rows.forEach(row => {
+            const type = row.querySelector("select").value;
+            const user = row.querySelector("input").value;
+            if(user) {
+                userData.social.push({type, user});
+                const item = document.createElement("div");
+                item.className = "social-item";
+                item.innerHTML = `<img src="${icons[type]}"> ${user}`;
+                socialContainer.appendChild(item);
+            }
+        });
+
+        generateQR();
+    }
+
+    function generateQR() {
+        const qrDiv = document.getElementById("qrcode");
+        qrDiv.innerHTML = "";
+        // نضع رابطاً وهمياً كمثال أو بيانات نصية
+      
+        const qrContent = `Name: ${document.getElementById("displayName").innerText} | Phone: ${userData.phone}`;
+        
+        new QRCode(qrDiv, {
+            text: qrContent,
+            width: 150,
+            height: 150,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    }
+
+    function printA4() {
+        window.print();
+    }
+
+    // تشغيل أولي
+    updatePreview();
+</script>
