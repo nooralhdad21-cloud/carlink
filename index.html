@@ -3,61 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarLink 2026 | بطاقة الطوارئ الذكية</title>
+    <title>CarLink Designer | لوحة التصميم</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="designer.css">
 </head>
 <body>
-    <div class="container no-print">
-        <header>
-            <h1>🚗 CarLink 2026</h1>
-            <p>نظام بطاقات الطوارئ والاعتذار لأصحاب السيارات</p>
-        </header>
-
-        <section id="loginSection" class="panel">
-            <h3>أدخل رقم هاتفك للبدء</h3>
-            <div class="phone-input-wrapper">
-                <span>+964</span>
-                <input type="text" id="loginPhone" placeholder="أدخل رقم الهاتف (مثلاً: 7701109692)" maxlength="10">
-            </div>
-            <button class="btn-primary" onclick="login()">إنشاء بطاقتي الآن</button>
-        </section>
-
-        <section id="dashboard" class="panel" style="display:none;">
-            <div class="input-group">
-                <input type="text" id="nameInput" placeholder="الاسم الكامل (يظهر على البطاقة)" oninput="updatePreview()">
-                <input type="text" id="instaUser" placeholder="يوزر انستجرام (اختياري)" oninput="updatePreview()">
-            </div>
-            
-            <div class="actions">
-                <button class="btn-success" onclick="window.print()">🖨️ طباعة A4</button>
-                <button class="btn-image" onclick="downloadCard()">🖼️ حفظ كصورة PNG</button>
-            </div>
-        </section>
-    </div>
-
-    <div id="printArea">
-        <div id="captureTarget" class="card-premium">
-            <div class="card-content">
-                <div class="emergency-text">في حال الضرورة اتصل بي:</div>
-                <h2 id="displayName">نورالدين صباح</h2>
-                <div class="displayName-underline"></div>
-                
-                <div id="displayPhone">770XXXXXXX</div>
-                
-                <div class="empty-qr-placeholder"></div>
-                
-                <div class="card-socials">
-                    <span id="instaLabel"></span>
-                </div>
-                <footer class="card-footer-text">
-                    تصميم وتطوير: المهندس نورالدين صباح <br>
-                    Instagram: @eng.nooraldein | Telegram: @rucno
-                </footer>
-            </div>
+    <nav class="designer-nav no-print">
+        <div class="nav-logo">🚗 CarLink</div>
+        <div class="nav-links">
+            <a href="index.html">الرئيسية</a>
+            <a href="templates.html">المعرض</a>
         </div>
+        <button class="btn-image" onclick="downloadCard()">حفظ كصورة</button>
+    </nav>
+
+    <div class="designer-wrapper no-print">
+        <aside class="designer-tools">
+            <div class="tools-group">
+                <h3>1. اختر التصميم</h3>
+                <div class="template-thumbs">
+                    <img src="img/tpl-gold.png" alt="ذهبي فخم" onclick="changeTemplate('gold')">
+                    <img src="img/tpl-dark.png" alt="أسود رياضي" onclick="changeTemplate('dark')">
+                    <img src="img/tpl-white.png" alt="أبيض كلاسيك" onclick="changeTemplate('white')">
+                </div>
+            </div>
+
+            <div class="tools-group">
+                <h3>2. تعديل البيانات</h3>
+                <input type="text" id="nameInput" placeholder="الاسم الوهمي" oninput="updatePreview()">
+                <input type="text" id="phoneInput" placeholder="رقم الهاتف" oninput="updatePreview()">
+                <input type="text" id="instaInput" placeholder="انستجرام" oninput="updatePreview()">
+            </div>
+
+            <div class="tools-group">
+                <h3>3. الإجراءات</h3>
+                <button class="btn-success" onclick="window.print()">طباعة A4</button>
+            </div>
+        </aside>
+
+        <main class="designer-canvas">
+            <div id="captureTarget" class="card-premium tpl-gold"> <div class="card-content">
+                    <div class="card-header">أعتذر عن الوقوف الخاطئ</div>
+                    <h2 id="displayName">صاحب السيارة</h2> <div id="displayPhone">07XXXXXXXXX</div> <p id="displayMsg" class="sub-msg">سأعود خلال دقائق، يرجى الاتصال بي فوراً</p>
+                    
+                    <div class="card-footer">
+                        <span id="instaLabel"></span>
+                        
+                        <div class="dev-rights">
+                            تطوير: <a href="https://instagram.com/eng.nooraldein" target="_blank">المهندس نورالدين صباح</a> <br>
+                            <span class="site-domain">nooralhdad21-cloud.github.io/carlink</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <script src="script.js"></script>
+    <script src="designer.js"></script>
 </body>
 </html>
