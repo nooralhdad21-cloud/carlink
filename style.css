@@ -1,40 +1,27 @@
-window.login = function() {
-    const phone = document.getElementById("loginPhone").value;
-    if(phone.length < 10) return alert("يرجى إدخال رقم هاتف صحيح");
-    window.fullPhone = phone; // نحفظ الرقم الكامل للباركود فقط
-    document.getElementById("loginSection").style.display = "none";
-    document.getElementById("dashboard").style.display = "block";
-    updatePreview();
+:root { --main-gold: #d4af37; --card-bg: #1a1a1a; }
+body { background: #f0f2f5; font-family: 'Tahoma', sans-serif; }
+.card-premium {
+    background: var(--card-bg) !important;
+    color: white !important;
+    width: 350px; margin: 20px auto;
+    padding: 25px; border-radius: 15px;
+    border: 2px solid var(--main-gold);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
+#qrcode { background: white; padding: 10px; display: inline-block; border-radius: 8px; margin: 15px 0; }
+.dev-footer { margin-top: 50px; padding: 20px; border-top: 1px solid #ddd; }
+.social-dev a { margin: 0 10px; text-decoration: none; color: #007bff; font-weight: bold; }
 
-window.updatePreview = function() {
-    const name = document.getElementById("nameInput").value || "نورالدين صباح";
-    const fb = document.getElementById("fbInput").value || "";
-    
-    // تشفير الرقم ليظهر (077*****059)
-    const p = window.fullPhone;
-    const maskedPhone = p.substring(0, 3) + "*****" + p.substring(p.length - 3);
-    
-    document.getElementById("displayName").innerText = name;
-    document.getElementById("displayPhone").innerText = maskedPhone;
-
-    generateQR(name, window.fullPhone, fb);
-}
-
-window.generateQR = function(name, phone, fb) {
-    const qrDiv = document.getElementById("qrcode");
-    qrDiv.innerHTML = "";
-    
-    // الرابط الذي سيفتحه الباركود (يحتوي البيانات الكاملة)
-    const baseUrl = window.location.href.split('?')[0];
-    const profileUrl = `${baseUrl}?n=${encodeURIComponent(name)}&p=${phone}&fb=${encodeURIComponent(fb)}`;
-
-    new QRCode(qrDiv, {
-        text: profileUrl,
-        width: 140,
-        height: 140,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
-    });
+/* إعدادات الطباعة الاحترافية */
+@media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+    .card-premium {
+        position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        background-color: #1a1a1a !important;
+        color: white !important;
+        box-shadow: none;
+    }
 }
