@@ -3,61 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarLink Designer | المهندس نورالدين</title>
+    <title>CarLink Pro | منصة التصميم الاحترافية</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="app-container">
-        <aside class="sidebar no-print">
-            <div class="logo">🚗 CarLink <span>Pro</span></div>
-            
-            <div class="tool-section">
-                <h3>🎨 اختر المظهر</h3>
-                <div class="template-grid">
-                    <button class="tpl-btn gold" onclick="setTemplate('gold')">ذهبي ملكي</button>
-                    <button class="tpl-btn red" onclick="setTemplate('red')">رياضي أحمر</button>
-                    <button class="tpl-btn blue" onclick="setTemplate('blue')">أزرق كلاسيك</button>
+<div class="main-wrapper">
+    <aside class="control-panel no-print">
+        <div class="brand">
+            <span class="logo-icon">⚡</span>
+            <h1>CarLink <span>Pro</span></h1>
+        </div>
+
+        <div class="scroll-area">
+            <div class="setting-group">
+                <label>🎨 القالب المختار</label>
+                <div class="tpl-selector">
+                    <div class="tpl-card active" onclick="setTpl('luxury')" data-tpl="luxury">ملكـي</div>
+                    <div class="tpl-card" onclick="setTpl('sport')" data-tpl="sport">رياضـي</div>
+                    <div class="tpl-card" onclick="setTpl('modern')" data-tpl="modern">عصـري</div>
                 </div>
             </div>
 
-            <div class="tool-section">
-                <h3>✍️ البيانات الحية</h3>
-                <input type="text" id="inName" placeholder="الاسم (مثلاً: صاحب السيارة)" onkeyup="syncData()">
-                <input type="text" id="inPhone" placeholder="رقم الهاتف" onkeyup="syncData()">
-                <textarea id="inMsg" placeholder="رسالة الاعتذار..." onkeyup="syncData()"></textarea>
+            <div class="setting-group">
+                <label>👤 المعلومات الشخصية</label>
+                <input type="text" id="inName" placeholder="الاسم الكامل" onkeyup="updateLive()">
+                <input type="text" id="inPhone" placeholder="رقم الهاتف" onkeyup="updateLive()">
+                <textarea id="inMsg" placeholder="رسالة الاعتذار..." onkeyup="updateLive()"></textarea>
             </div>
+        </div>
 
-            <div class="tool-section buttons">
-                <button class="btn-save" onclick="saveAsImage()">💾 حفظ كصورة PNG</button>
-                <button class="btn-print" onclick="window.print()">🖨️ طباعة فورية</button>
-            </div>
-            
-            <div class="dev-credits">
-                تطوير المهندس نورالدين صباح <br>
-                @eng.nooraldein
-            </div>
-        </aside>
+        <div class="action-buttons">
+            <button class="btn-dl" onclick="takeShot()">💾 حفظ الصورة</button>
+            <button class="btn-pr" onclick="window.print()">🖨️ طباعة فورية</button>
+        </div>
+    </aside>
 
-        <main class="preview-area">
-            <div id="cardCanvas" class="card tpl-gold">
-                <div class="card-content">
-                    <div id="outMsg" class="card-header">أعتذر عن الوقوف الخاطئ</div>
-                    <div class="phone-box">
-                        <span id="outPhone">07XXXXXXXXX</span>
-                    </div>
-                    <h2 id="outName">صاحب السيارة</h2>
-                    
-                    <div class="card-footer">
-                        <div class="rights">CarLink 2026 | Developed by Eng. Nooraldein</div>
-                        <div class="url-text">nooralhdad21-cloud.github.io/carlink</div>
+    <main class="canvas-stage">
+        <div id="cardBox" class="main-card tpl-luxury">
+            <div class="card-glow"></div>
+            <div class="card-body">
+                <div class="badge">CARLINK SMART SYSTEM</div>
+                <p id="outMsg" class="msg-text">أعتذر عن الوقوف الخاطئ، يرجى الاتصال بي لتحريك السيارة</p>
+                <div class="phone-display">
+                    <span id="outPhone">07XXXXXXXXX</span>
+                </div>
+                <h2 id="outName">المهندس نورالدين صباح</h2>
+                
+                <div class="card-footer">
+                    <div class="qr-mock"></div>
+                    <div class="legal">
+                        <p>تطوير: المهندس نورالدين صباح</p>
+                        <small>nooralhdad21-cloud.github.io/carlink</small>
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
+</div>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
