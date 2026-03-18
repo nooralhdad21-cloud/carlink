@@ -3,56 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarLink Designer | لوحة التصميم</title>
+    <title>CarLink Designer | منصة التصميم الذكية</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="designer.css">
 </head>
 <body>
-    <nav class="designer-nav no-print">
-        <div class="nav-logo">🚗 CarLink</div>
-        <div class="nav-links">
-            <a href="index.html">الرئيسية</a>
-            <a href="templates.html">المعرض</a>
-        </div>
-        <button class="btn-image" onclick="downloadCard()">حفظ كصورة</button>
-    </nav>
 
-    <div class="designer-wrapper no-print">
-        <aside class="designer-tools">
-            <div class="tools-group">
-                <h3>1. اختر التصميم</h3>
-                <div class="template-thumbs">
-                    <img src="img/tpl-gold.png" alt="ذهبي فخم" onclick="changeTemplate('gold')">
-                    <img src="img/tpl-dark.png" alt="أسود رياضي" onclick="changeTemplate('dark')">
-                    <img src="img/tpl-white.png" alt="أبيض كلاسيك" onclick="changeTemplate('white')">
+    <div class="app-container">
+        <aside class="sidebar no-print">
+            <div class="logo">🚗 CarLink <span>v2.0</span></div>
+            
+            <div class="tool-section">
+                <h3>🎨 اختر القالب</h3>
+                <div class="template-grid">
+                    <div class="tpl-thumb gold" onclick="setTemplate('gold')">ذهبي</div>
+                    <div class="tpl-thumb dark" onclick="setTemplate('dark')">رياضي</div>
+                    <div class="tpl-thumb blue" onclick="setTemplate('blue')">احترافي</div>
                 </div>
             </div>
 
-            <div class="tools-group">
-                <h3>2. تعديل البيانات</h3>
-                <input type="text" id="nameInput" placeholder="الاسم الوهمي" oninput="updatePreview()">
-                <input type="text" id="phoneInput" placeholder="رقم الهاتف" oninput="updatePreview()">
-                <input type="text" id="instaInput" placeholder="انستجرام" oninput="updatePreview()">
+            <div class="tool-section">
+                <h3>✍️ تعديل البيانات</h3>
+                <input type="text" id="inName" placeholder="الاسم (مثلاً: صاحب السيارة)" oninput="syncData()">
+                <input type="text" id="inPhone" placeholder="رقم الهاتف" oninput="syncData()">
+                <input type="text" id="inInsta" placeholder="يوزر انستجرام" oninput="syncData()">
+                <textarea id="inMsg" placeholder="رسالة الاعتذار..." oninput="syncData()"></textarea>
             </div>
 
-            <div class="tools-group">
-                <h3>3. الإجراءات</h3>
-                <button class="btn-success" onclick="window.print()">طباعة A4</button>
+            <div class="tool-section">
+                <button class="btn-save" onclick="saveAsImage()">🖼️ حفظ كصورة PNG</button>
+                <button class="btn-print" onclick="window.print()">🖨️ طباعة A4</button>
             </div>
         </aside>
 
-        <main class="designer-canvas">
-            <div id="captureTarget" class="card-premium tpl-gold"> <div class="card-content">
-                    <div class="card-header">أعتذر عن الوقوف الخاطئ</div>
-                    <h2 id="displayName">صاحب السيارة</h2> <div id="displayPhone">07XXXXXXXXX</div> <p id="displayMsg" class="sub-msg">سأعود خلال دقائق، يرجى الاتصال بي فوراً</p>
+        <main class="preview-area">
+            <div id="cardCanvas" class="card tpl-gold">
+                <div class="card-inner">
+                    <div id="outMsg" class="card-header">أعتذر عن الوقوف الخاطئ</div>
+                    <h2 id="outName">صاحب السيارة</h2>
+                    <div id="outPhone">07XXXXXXXXX</div>
                     
                     <div class="card-footer">
-                        <span id="instaLabel"></span>
-                        
-                        <div class="dev-rights">
-                            تطوير: <a href="https://instagram.com/eng.nooraldein" target="_blank">المهندس نورالدين صباح</a> <br>
-                            <span class="site-domain">nooralhdad21-cloud.github.io/carlink</span>
+                        <span id="outInsta"></span>
+                        <div class="dev-info">
+                            تطوير: المهندس نورالدين صباح <br>
+                            <span class="domain-text">nooralhdad21-cloud.github.io/carlink</span>
                         </div>
                     </div>
                 </div>
@@ -60,6 +55,6 @@
         </main>
     </div>
 
-    <script src="designer.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
