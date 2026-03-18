@@ -1,5 +1,5 @@
 function updateLive() {
-    // ربط المدخلات بالمخرجات فوراً
+    // ربط فوري للمدخلات
     const name = document.getElementById('inName').value || "المهندس نورالدين صباح";
     const phone = document.getElementById('inPhone').value || "07XXXXXXXXX";
     const msg = document.getElementById('inMsg').value || "أعتذر عن الوقوف الخاطئ، يرجى الاتصال بي لتحريك السيارة";
@@ -11,26 +11,31 @@ function updateLive() {
 
 function setTpl(style) {
     const card = document.getElementById('cardBox');
-    const tabs = document.querySelectorAll('.tpl-card');
+    const btns = document.querySelectorAll('.tab-btn');
     
-    // تغيير شكل البطاقة
+    // تغيير الكلاس
     card.className = 'main-card tpl-' + style;
     
-    // تحديث شكل الأزرار في القائمة
-    tabs.forEach(t => t.classList.remove('active'));
-    document.querySelector(`[data-tpl="${style}"]`).classList.add('active');
+    // تحديث شكل الأزرار
+    btns.forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
 }
 
 function takeShot() {
     const card = document.getElementById('cardBox');
+    // إشعار المستخدم بالانتظار قليلاً
+    const btn = document.querySelector('.btn-save');
+    btn.innerText = "جاري الحفظ...";
+
     html2canvas(card, {
-        scale: 4, // دقة جبارة للطباعة
+        scale: 4, 
         backgroundColor: null,
         useCORS: true
     }).then(canvas => {
         const link = document.createElement('a');
-        link.download = `CarLink-${Date.now()}.png`;
+        link.download = `CarLink-Pro-${Date.now()}.png`;
         link.href = canvas.toDataURL("image/png");
         link.click();
+        btn.innerText = "💾 حفظ كصورة";
     });
 }
