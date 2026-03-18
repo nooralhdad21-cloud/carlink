@@ -1,40 +1,35 @@
-// 1. مزامنة البيانات فور الكتابة (المعاينة الحية)
-function syncData() {
-    const name = document.getElementById('inName').value || "صاحب السيارة";
+function updateLive() {
+    // ربط المدخلات بالمخرجات فوراً
+    const name = document.getElementById('inName').value || "المهندس نورالدين صباح";
     const phone = document.getElementById('inPhone').value || "07XXXXXXXXX";
-    const msg = document.getElementById('inMsg').value || "أعتذر عن الوقوف الخاطئ";
+    const msg = document.getElementById('inMsg').value || "أعتذر عن الوقوف الخاطئ، يرجى الاتصال بي لتحريك السيارة";
 
     document.getElementById('outName').innerText = name;
     document.getElementById('outPhone').innerText = phone;
     document.getElementById('outMsg').innerText = msg;
 }
 
-// 2. تغيير القوالب
-function setTemplate(style) {
-    const card = document.getElementById('cardCanvas');
-    // إزالة كل كلاسات القوالب السابقة
-    card.classList.remove('tpl-gold', 'tpl-red', 'tpl-blue');
-    // إضافة القالب الجديد
-    card.classList.add('tpl-' + style);
+function setTpl(style) {
+    const card = document.getElementById('cardBox');
+    const tabs = document.querySelectorAll('.tpl-card');
+    
+    // تغيير شكل البطاقة
+    card.className = 'main-card tpl-' + style;
+    
+    // تحديث شكل الأزرار في القائمة
+    tabs.forEach(t => t.classList.remove('active'));
+    document.querySelector(`[data-tpl="${style}"]`).classList.add('active');
 }
 
-// 3. حفظ كصورة (حل مشكلة عدم الحفظ)
-function saveAsImage() {
-    const card = document.getElementById('cardCanvas');
-    
-    // التأكد من أن المكتبة محملة
-    if (typeof html2canvas === 'undefined') {
-        alert("المكتبة قيد التحميل، يرجى الانتظار ثانية.");
-        return;
-    }
-
+function takeShot() {
+    const card = document.getElementById('cardBox');
     html2canvas(card, {
-        scale: 3, // دقة عالية جداً
-        useCORS: true,
-        backgroundColor: null
+        scale: 4, // دقة جبارة للطباعة
+        backgroundColor: null,
+        useCORS: true
     }).then(canvas => {
         const link = document.createElement('a');
-        link.download = 'CarLink-Design.png';
+        link.download = `CarLink-${Date.now()}.png`;
         link.href = canvas.toDataURL("image/png");
         link.click();
     });
