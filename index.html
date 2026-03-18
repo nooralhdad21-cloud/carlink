@@ -3,35 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarLink 2026 | نظام البطاقة الذكية</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <title>CarLink | بطاقة اعتذار ذكية</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container no-print">
         <header>
-            <h1>🚗 CarLink 2026</h1>
-            <p>نظام التواصل الذكي لأصحاب السيارات</p>
+            <h1>🚗 CarLink | بطاقة اعتذار</h1>
+            <p>تصميم مميز المهندس نورالدين صباح</p>
         </header>
 
         <section id="loginSection" class="panel">
-            <h3>أدخل رقم هاتفك للبدء</h3>
-            <input type="text" id="loginPhone" placeholder="مثال: 07701109692">
-            <button class="btn-primary" onclick="login()">إنشاء البطاقة الآن</button>
+            <h3>أدخل رقم هاتفك (يظهر بوضوح خلف الزجاج)</h3>
+            <input type="text" id="loginPhone" placeholder="مثال: 07701109692" maxlength="11">
+            <button class="btn-primary" onclick="login()">إنشاء بطاقتي الفخمة</button>
         </section>
 
         <section id="dashboard" class="panel" style="display:none;">
             <div class="input-group">
-                <input type="text" id="nameInput" placeholder="الاسم الكامل (يظهر على البطاقة)" oninput="updatePreview()">
+                <input type="text" id="nameInput" placeholder="الاسم الكامل (اختياري)" oninput="updatePreview()">
                 <input type="text" id="instaUser" placeholder="يوزر انستجرام (اختياري)" oninput="updatePreview()">
-                <input type="text" id="teleUser" placeholder="يوزر تليجرام (اختياري)" oninput="updatePreview()">
             </div>
             
             <div class="actions">
                 <button class="btn-success" onclick="window.print()">🖨️ طباعة A4</button>
                 <button class="btn-image" onclick="downloadCard()">🖼️ حفظ كصورة</button>
-                <button class="btn-share" onclick="copyLink()">🔗 نسخ الرابط</button>
             </div>
         </section>
     </div>
@@ -39,15 +36,16 @@
     <div id="printArea">
         <div id="captureTarget" class="card-premium">
             <div class="card-content">
-                <div class="emergency-text">في حال الضرورة اتصل بي:</div>
-                <h2 id="displayName">نورالدين صباح</h2>
+                <div id="sorryMessage" class="sorry-text"></div>
+                
+                <div class="call-text">في حال الضرورة اتصل بي:</div>
+                
                 <div id="displayPhone">077XXXXXXXX</div>
                 
-                <div id="qrcode"></div>
+                <h2 id="displayName">نورالدين صباح</h2>
                 
                 <div class="card-socials">
                     <span id="instaLabel"></span>
-                    <span id="teleLabel"></span>
                 </div>
                 <footer class="card-footer-text">
                     تصميم وتطوير: المهندس نورالدين صباح <br>
