@@ -10,16 +10,15 @@
 </head>
 <body>
 
-<div class="app-wrapper">
-    <section class="preview-stage">
+<div class="app-container">
+    <section class="preview-box">
         <div id="cardBox" class="main-card tpl-luxury">
-            <div class="card-body">
-                <div class="badge">CARLINK SMART SYSTEM</div>
-                <p id="outMsg" class="msg-text">أعتذر عن الوقوف الخاطئ، يرجى الاتصال بي لتحريك السيارة</p>
-                <div class="phone-display">
+            <div class="card-inner">
+                <p id="outMsg" class="msg-text">أعتذر عن الوقوف الخاطئ، يرجى الاتصال بي</p>
+                <div class="phone-num">
                     <span id="outPhone">07XXXXXXXXX</span>
                 </div>
-                <h2 id="outName">المهندس نورالدين صباح</h2>
+                <h2 id="outName">صاحب السيارة</h2>
                 <div class="card-footer">
                     <small>nooralhdad21-cloud.github.io/carlink</small>
                 </div>
@@ -27,24 +26,24 @@
         </div>
     </section>
 
-    <aside class="controls no-print">
-        <div class="drag-handle"></div>
+    <aside class="editor-panel no-print">
         <div class="tabs">
             <button class="tab-btn active" onclick="setTpl('luxury')">ملكي</button>
             <button class="tab-btn" onclick="setTpl('sport')">رياضي</button>
-            <button class="tab-btn" onclick="setTpl('modern')">عصري</button>
         </div>
 
-        <div class="inputs">
+        <div class="input-fields">
             <input type="text" id="inName" placeholder="الاسم الكامل" oninput="updateLive()">
             <input type="tel" id="inPhone" placeholder="رقم الهاتف" oninput="updateLive()">
             <textarea id="inMsg" placeholder="رسالة الاعتذار..." oninput="updateLive()"></textarea>
         </div>
 
-        <div class="actions">
+        <div class="main-actions">
             <button class="btn-save" onclick="takeShot()">💾 حفظ كصورة</button>
             <button class="btn-print" onclick="window.print()">🖨️ طباعة</button>
         </div>
+        
+        <p class="rights">تطوير: المهندس نورالدين صباح</p>
     </aside>
 </div>
 
