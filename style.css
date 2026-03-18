@@ -1,80 +1,40 @@
-/* تصميم البطاقة الاحترافي */
-.cardPreview {
-    margin: 30px auto;
-    width: 350px; /* حجم بطاقة العمل */
-    background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%); /* لون أسود فاخر */
-    color: #fff;
-    border-radius: 15px;
-    padding: 25px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.1);
+window.login = function() {
+    const phone = document.getElementById("loginPhone").value;
+    if(phone.length < 10) return alert("يرجى إدخال رقم هاتف صحيح");
+    window.fullPhone = phone; // نحفظ الرقم الكامل للباركود فقط
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+    updatePreview();
 }
 
-/* إضافة لمعة على البطاقة */
-.cardPreview::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+window.updatePreview = function() {
+    const name = document.getElementById("nameInput").value || "نورالدين صباح";
+    const fb = document.getElementById("fbInput").value || "";
+    
+    // تشفير الرقم ليظهر (077*****059)
+    const p = window.fullPhone;
+    const maskedPhone = p.substring(0, 3) + "*****" + p.substring(p.length - 3);
+    
+    document.getElementById("displayName").innerText = name;
+    document.getElementById("displayPhone").innerText = maskedPhone;
+
+    generateQR(name, window.fullPhone, fb);
 }
 
-.cardContent {
-    text-align: center; /* التمركز يعطي فخامة أكثر */
-    direction: rtl;
-    position: relative;
-    z-index: 1;
-}
+window.generateQR = function(name, phone, fb) {
+    const qrDiv = document.getElementById("qrcode");
+    qrDiv.innerHTML = "";
+    
+    // الرابط الذي سيفتحه الباركود (يحتوي البيانات الكاملة)
+    const baseUrl = window.location.href.split('?')[0];
+    const profileUrl = `${baseUrl}?n=${encodeURIComponent(name)}&p=${phone}&fb=${encodeURIComponent(fb)}`;
 
-#displayName {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #00c6ff; /* لون مميز للاسم */
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-#displayPhone {
-    font-size: 16px;
-    opacity: 0.8;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
-}
-
-/* تنسيق الـ QR Code */
-#qrcode {
-    background: #fff;
-    padding: 10px;
-    border-radius: 10px;
-    display: inline-block;
-    margin-top: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-/* تنسيق أيقونات التواصل */
-#displaySocial {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 15px;
-}
-
-#displaySocial a {
-    background: rgba(255,255,255,0.1);
-    padding: 8px 12px;
-    border-radius: 50px;
-    font-size: 14px;
-    color: #fff;
-    transition: 0.3s;
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-#displaySocial a:hover {
-    background: #00c6ff;
-    transform: translateY(-3px);
+    new QRCode(qrDiv, {
+        text: profileUrl,
+        width: 140,
+        height: 140,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
 }
