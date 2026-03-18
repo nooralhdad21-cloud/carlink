@@ -1,6 +1,7 @@
+// تحديث البيانات حياً
 function updateLive() {
-    const name = document.getElementById('inName').value || "صاحب السيارة";
-    const phone = document.getElementById('inPhone').value || "07XXXXXXXXX";
+    const name = document.getElementById('inName').value || "المهندس نورالدين صباح";
+    const phone = document.getElementById('inPhone').value || "07701109692";
     const msg = document.getElementById('inMsg').value || "أعتذر عن الوقوف الخاطئ، يرجى الاتصال بي";
 
     document.getElementById('outName').innerText = name;
@@ -8,27 +9,33 @@ function updateLive() {
     document.getElementById('outMsg').innerText = msg;
 }
 
-function setTpl(style) {
+// تغيير القوالب
+function setTpl(style, btn) {
     const card = document.getElementById('cardBox');
-    const btns = document.querySelectorAll('.tab-btn');
     card.className = 'main-card tpl-' + style;
-    btns.forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
+    
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
 }
 
+// حفظ كصورة بجودة عالية
 function takeShot() {
     const card = document.getElementById('cardBox');
-    const btn = document.querySelector('.btn-save');
-    btn.innerText = "جاري الحفظ...";
+    const saveBtn = document.querySelector('.btn-save');
+    saveBtn.innerText = "جاري الحفظ...";
 
     html2canvas(card, {
         scale: 3, 
+        backgroundColor: null,
         useCORS: true
     }).then(canvas => {
         const link = document.createElement('a');
-        link.download = `CarLink-Pro.png`;
+        link.download = `CarLink-Pro-${Date.now()}.png`;
         link.href = canvas.toDataURL("image/png");
         link.click();
-        btn.innerText = "💾 حفظ كصورة";
+        saveBtn.innerText = "💾 حفظ الصورة";
+    }).catch(err => {
+        saveBtn.innerText = "💾 حفظ الصورة";
+        alert("حدث خطأ بسيط، حاول مرة أخرى");
     });
 }
