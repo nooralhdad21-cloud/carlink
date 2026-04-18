@@ -2,160 +2,289 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Waze Plus Concept</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure Pharma - Smart ERP System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --waze-blue: #33f1ff;
-            --waze-dark: #242526;
-            --waze-purple: #9637ff;
+            --primary-blue: #0a3d62;
+            --secondary-blue: #3c6382;
+            --light-bg: #f4f7f6;
+            --white: #ffffff;
+            --accent-color: #60a3bc;
+            --text-dark: #2f3542;
         }
 
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            overflow: hidden;
-            background-color: var(--waze-dark);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
         }
 
-        /* خريطة الخلفية - تمويه كامل لشكل ويز */
-        .map-frame {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+        body {
+            background-color: var(--light-bg);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* القائمة الجانبية - Logical Organization */
+        .sidebar {
+            width: 260px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+        }
+
+        .sidebar h2 {
+            font-size: 22px;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+
+        .menu-item {
+            padding: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-item:hover {
+            background-color: var(--secondary-blue);
+        }
+
+        /* المحتوى الرئيسي */
+        .main-content {
+            margin-right: 260px;
+            width: 100%;
+            padding: 30px;
+        }
+
+        /* المركز المالي - Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+            border-top: 4px solid var(--primary-blue);
+        }
+
+        .card h3 { color: var(--secondary-blue); font-size: 14px; }
+        .card p { font-size: 24px; font-weight: bold; margin-top: 10px; color: var(--text-dark); }
+
+        /* محرك استخراج البيانات - Extraction Engine Area */
+        .upload-section {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px dashed var(--accent-color);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .btn-upload {
+            background: var(--primary-blue);
+            color: white;
+            padding: 10px 25px;
             border: none;
-            z-index: 1;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
         }
 
-        /* شريط جانبي يشبه قائمة ويز */
-        .side-menu {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 100;
+        /* استمارة المطابقة المالية */
+        .form-section {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .input-group {
             display: flex;
             flex-direction: column;
-            gap: 15px;
         }
 
-        .waze-btn {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
+        .input-group label { margin-bottom: 8px; font-weight: bold; color: var(--primary-blue); }
+        .input-group input { padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+
+        .full-width { grid-column: span 2; }
+
+        /* منطقة المعاينة قبل الطباعة */
+        .print-preview {
+            margin-top: 30px;
             background: white;
-            border: 4px solid var(--waze-blue);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            padding: 40px;
+            border: 1px solid #eee;
+            display: none; /* تظهر عند الحساب */
+        }
+
+        .header-print {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            font-size: 24px;
-            transition: 0.3s;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
         }
 
-        .waze-btn:active { transform: scale(0.9); }
-
-        .youtube-trigger {
-            background: var(--waze-purple);
-            border-color: white;
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
-            text-align: center;
+        @media print {
+            .sidebar, .upload-section, .btn-calculate { display: none; }
+            .main-content { margin-right: 0; padding: 0; }
+            .print-preview { display: block !important; border: none; }
         }
 
-        /* نافذة يوتيوب المنبثقة - أبعاد أصلية */
-        .yt-overlay {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 200;
-            display: none; /* مخفي افتراضياً */
-            justify-content: center;
-            align-items: center;
-        }
-
-        .yt-content {
-            width: 90%;
-            aspect-ratio: 16 / 9; /* أبعاد يوتيوب الأصلية */
-            max-height: 80%;
-            position: relative;
-            background: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 0 50px rgba(0,0,0,1);
-        }
-
-        .close-yt {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 10px 20px;
-            background: #ff0000;
-            color: white;
-            border-radius: 5px;
-            font-weight: bold;
-            z-index: 210;
-        }
-
-        /* مؤشر السرعة (للتمويه) */
-        .speed-limit {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            width: 80px;
-            height: 80px;
-            background: white;
-            border: 6px solid #ff0000;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 30px;
-            font-weight: bold;
-            z-index: 50;
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar { width: 70px; padding: 10px; }
+            .sidebar h2, .menu-item span { display: none; }
+            .main-content { margin-right: 70px; }
+            .form-section { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
         }
     </style>
 </head>
 <body>
 
-    <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d106666.123456789!2d44.366!3d33.315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sar!2siq!4v123456789"></iframe>
-
-    <div class="side-menu">
-        <div class="waze-btn" onclick="alert('بحث...')">🔍</div>
-        <div class="waze-btn" onclick="alert('صوت...')">🔊</div>
-        <div id="openBtn" class="waze-btn youtube-trigger">اضغط هنا</div>
+    <div class="sidebar">
+        <h2>Pure Pharma</h2>
+        <div class="menu-item"><span>لوحة القيادة</span></div>
+        <div class="menu-item"><span>إنشاء مطابقة آلية</span></div>
+        <div class="menu-item"><span>قاعدة البيانات</span></div>
+        <div class="menu-item"><span>الإدارة والمندوبين</span></div>
     </div>
 
-    <div class="speed-limit">100</div>
+    <div class="main-content">
+        <div class="dashboard-grid">
+            <div class="card"><h3>إجمالي المبالغ</h3><p id="total-stats">0 IQD</p></div>
+            <div class="card"><h3>العملاء النشطين</h3><p>124</p></div>
+            <div class="card"><h3>المطابقات اليومية</h3><p>18</p></div>
+        </div>
 
-    <div class="yt-overlay" id="ytOverlay">
-        <div class="close-yt" id="closeBtn">إغلاق X</div>
-        <div class="yt-content">
-            <iframe id="ytPlayer" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div class="upload-section">
+            <h3 style="margin-bottom: 15px; color: var(--primary-blue);">محرك استخراج البيانات الذكي</h3>
+            <p style="margin-bottom: 20px; color: #666;">يدعم PDF, Excel, Word - معالجة ذكية بدون تجمد</p>
+            <input type="file" id="fileInput" hidden accept=".pdf,.xlsx,.docx">
+            <button class="btn-upload" onclick="document.getElementById('fileInput').click()">رفع الملف المالي</button>
+        </div>
+
+        <div class="form-section">
+            <div class="input-group">
+                [span_0](start_span)<label>اسم العميل / الصيدلية[span_0](end_span)</label>
+                <input type="text" id="clientName" placeholder="اكتب الاسم الرسمي هنا">
+            </div>
+            <div class="input-group">
+                <label>المندوب المسؤول</label>
+                <input type="text" id="agentName" placeholder="اسم مندوب المبيعات">
+            </div>
+            <div class="input-group">
+                <label>الرصيد السابق (IQD)</label>
+                <input type="number" id="prevBalance" value="0">
+            </div>
+            <div class="input-group">
+                [span_1](start_span)<label>نسبة الخصم (%)[span_1](end_span)</label>
+                <input type="number" id="discountPercent" value="0">
+            </div>
+            <div class="input-group">
+                [span_2](start_span)<label>تسديد ميداني (IQD)[span_2](end_span)</label>
+                <input type="number" id="fieldPay" value="0">
+            </div>
+            <div class="input-group">
+                [span_3](start_span)<label>إجمالي الحركات الجديد[span_3](end_span)</label>
+                <input type="number" id="newTransactions" value="0">
+            </div>
+            <button class="btn-upload full-width" onclick="calculateFinal()">حساب المطابقة وإنشاء الوصل</button>
+        </div>
+
+        <div id="resultPreview" class="print-preview">
+            <div class="header-print">
+                <div>
+                    <h1 style="color: var(--primary-blue);">PURE PHARMA</h1>
+                    <p>SCIENTIFIC BUREAU</p>
+                </div>
+                <div style="text-align: left;">
+                    [span_4](start_span)<p>تاريخ المطابقة: 18/04/2026[span_4](end_span)</p>
+                    [span_5](start_span)<p>info@pure-pharma.com[span_5](end_span)</p>
+                </div>
+            </div>
+
+            <div style="margin: 20px 0; border-bottom: 1px solid #eee; padding-bottom: 15px;">
+                <h3 id="printClientName">...</h3>
+                [span_6](start_span)<p>عناية المستلم: صاحب الشأن[span_6](end_span)</p>
+            </div>
+
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                <tr style="background: #f9f9f9; border-bottom: 2px solid var(--primary-blue);">
+                    <th style="padding: 10px; text-align: right;">الوصف</th>
+                    <th style="padding: 10px; text-align: left;">المبلغ (IQD)</th>
+                </tr>
+                [span_7](start_span)<tr><td style="padding: 10px;">إجمالي الحركات + الرصيد السابق[span_7](end_span)</td><td style="padding: 10px; text-align: left;" id="subTotal">0</td></tr>
+                [span_8](start_span)<tr><td style="padding: 10px;">قيمة الخصم المستقطع[span_8](end_span)</td><td style="padding: 10px; text-align: left; color: red;" id="discountValue">0</td></tr>
+                [span_9](start_span)<tr><td style="padding: 10px;">تسديد ميداني[span_9](end_span)</td><td style="padding: 10px; text-align: left; color: red;" id="printFieldPay">0</td></tr>
+                <tr style="font-weight: bold; border-top: 2px solid var(--primary-blue); font-size: 1.2em;">
+                    [span_10](start_span)<td style="padding: 10px;">الصافي النهائي المطلوب[span_10](end_span)</td>
+                    <td style="padding: 10px; text-align: left;" id="finalTotal">0</td>
+                </tr>
+            </table>
+
+            <div style="margin-top: 50px; display: flex; justify-content: space-between;">
+                [span_11](start_span)<p>توقيع المحاسب[span_11](end_span) <br>....................</p>
+                [span_12](start_span)<p>توقيع وختم العميل[span_12](end_span) <br>....................</p>
+            </div>
+            
+            <button class="btn-upload" onclick="window.print()" style="margin-top: 20px;">طباعة كشف الحساب</button>
         </div>
     </div>
 
     <script>
-        const overlay = document.getElementById('ytOverlay');
-        const openBtn = document.getElementById('openBtn');
-        const closeBtn = document.getElementById('closeBtn');
-        const player = document.getElementById('ytPlayer');
+        function calculateFinal() {
+            // جلب القيم من المدخلات
+            const prevBalance = parseFloat(document.getElementById('prevBalance').value) || 0;
+            const newTransactions = parseFloat(document.getElementById('newTransactions').value) || 0;
+            const discountPercent = parseFloat(document.getElementById('discountPercent').value) || 0;
+            const fieldPay = parseFloat(document.getElementById('fieldPay').value) || 0;
+            const clientName = document.getElementById('clientName').value || "اسم العميل";
 
-        // ضع رابط قائمة التشغيل أو الفيديو هنا
-        const videoUrl = "https://www.youtube.com/embed/videoseries?list=PLuvpxm9Y_QK6pU-o9f_V_5KIn0zU50G9j&autoplay=1";
+            [span_13](start_span)// العمليات الحسابية[span_13](end_span)
+            const subTotal = prevBalance + newTransactions;
+            const discountValue = (subTotal * discountPercent) / 100;
+            const finalTotal = subTotal - discountValue - fieldPay;
 
-        openBtn.onclick = function() {
-            overlay.style.display = 'flex';
-            player.src = videoUrl;
-        };
+            // تحديث العرض في المعاينة
+            document.getElementById('printClientName').innerText = "كشف حساب: " + clientName;
+            document.getElementById('subTotal').innerText = subTotal.toLocaleString() + " IQD";
+            document.getElementById('discountValue').innerText = "- " + discountValue.toLocaleString() + " IQD";
+            document.getElementById('printFieldPay').innerText = "- " + fieldPay.toLocaleString() + " IQD";
+            document.getElementById('finalTotal').innerText = finalTotal.toLocaleString() + " IQD";
+            
+            // تحديث لوحة القيادة
+            document.getElementById('total-stats').innerText = finalTotal.toLocaleString() + " IQD";
 
-        closeBtn.onclick = function() {
-            overlay.style.display = 'none';
-            player.src = ""; // لإيقاف الصوت عند الإغلاق
+            // إظهار قسم المعاينة
+            document.getElementById('resultPreview').style.display = 'block';
+            document.getElementById('resultPreview').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // محاكاة استخراج البيانات عند اختيار ملف
+        document.getElementById('fileInput').onchange = function(e) {
+            alert("جاري تحليل الملف واستخراج البيانات مالياً... تم العثور على فواتير بقيمة 1,250,000 IQD");
+            document.getElementById('newTransactions').value = 1250000;
         };
     </script>
 </body>
