@@ -3,49 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artiva | منصة التصميم الاحترافية المجانية</title>
+    <title>Artiva | Pro Design Platform</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Plus+Jakarta+Sans:wght@400;800&display=swap" rel="stylesheet">
 
     <style>
-        /* إعدادات المتصفح الأساسية لضمان عمل التصميم بشكل صحيح */
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #07060F; /* نفس لون الخلفية في كود JSX */
-            color: #F0EEF8;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: #07060F; 
+            color: #F0EEF8; 
             font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
         }
-
-        /* حاوية مشروع React */
-        #root {
-            min-height: 100vh;
-        }
-
-        /* تأثير تحميل بسيط للموقع قبل تشغيل الجافا سكريبت */
-        .loader {
-            display: flex;
-            justify-content: center;
-            alignItems: center;
-            height: 100vh;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #7C5CFC;
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        /* انيميشن الخلفية */
+        .bg-glow {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #16152A 0%, #07060F 100%);
+            z-index: -1;
         }
     </style>
 </head>
 <body>
+    <div id="root"></div>
 
-    <div id="root">
-        <div class="loader">جاري تحميل Artiva...</div>
-    </div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
 
-    <script src="https://apis.google.com/js/api.js"></script>
+        // --- الثوابت ---
+        const C = {
+            bg: "#07060F",
+            surface: "#100F1E",
+            accent: "#7C5CFC",
+            accent2: "#E040FB",
+            gold: "#FFD166",
+            text: "#F0EEF8",
+            muted: "#8B88A8",
+            border: "rgba(255,255,255,0.07)"
+        };
 
+        // --- المكونات ---
+        const Button = ({ children, variant = "primary", onClick, style }) => {
+            const baseStyle = {
+                padding: "12px 24px", borderRadius: "12px", border: "none",
+                cursor: "pointer", fontWeight: "600", transition: "0.3s", ...style
+            };
+            const variants = {
+                primary: { background: `linear-gradient(135deg, ${C.accent}, ${C.accent2})`, color: "#fff" },
+                ghost: { background: "transparent", border: `1px solid ${C.border}`, color: C.text },
+                admin: { background: C.gold, color: "#000" }
+            };
+            return <button style={{...baseStyle, ...variants[variant]}} onClick={onClick}>{children}</button>;
+        };
+
+        function ArtivaApp() {
+            const [isAdmin, setIsAdmin] = useState(false);
+            const [showLogin, setShowLogin] = useState(false);
+            const [scrolled, setScrolled] = useState(false);
+            const [credentials, setCredentials] = useState({ user: "", pass: "" });
+
+            useEffect(() => {
+                const auth = localStorage.getItem("artiva_admin");
+                if (auth === "true") setIsAdmin(true);
+
+                window.onscroll = () => setScrolled(window.scrollY > 50);
+            }, []);
+
+            const handleLogin = (e) => {
+                e.preventDefault();
+                if (credentials.user === "admin" && credentials.pass === "admin123") {
+                    setIsAdmin(true);
+                    setShowLogin(false);
+                    localStorage.setItem("artiva_admin", "true");
+                } else {
+                    alert("البيانات خاطئة!");
+                }
+            };
+
+            const logout = () => {
+                setIsAdmin(false);
+                localStorage.removeItem("artiva_admin");
+            };
+
+            return (
+                <div>
+                    <div className="bg-glow"></div>
+
+                    {/* Navbar */}
+                    <nav style={{
+                        position: "fixed", top: 0, width: "100%", padding: scrolled ? "15px 50px" : "30px 50px",
+                        display: "flex", justifyContent: "space-between", alignItems: "center",
+                        background: scrolled ? "rgba(7,6,15,0.9)" : "transparent",
+                        backdropFilter: "blur(10px)", zIndex: 1000, transition: "0.4s"
+                    }}>
+                        <div style={{fontSize: "1.8rem", fontWeight: "800", color: C.accent}}>Artiva.</div>
+                        <div style={{display: "flex", gap: "15px", alignItems: "center"}}>
+                            {isAdmin && <span style={{color: C.gold, fontSize: "0.8rem"}}>وضع المدير مفعل ⚡</span>}
+                            <Button variant="ghost" onClick={isAdmin ? logout : () => setShowLogin(true)}>
+                                {isAdmin ? "خروج" : "دخول المدير"}
+                            </Button>
+                            <Button onClick={() => alert(isAdmin ? "جاري الاتصال بـ Google Drive..." : "سجل كمدير لتفعيل الحفظ السحابي")}>
+                                {isAdmin ? "حفظ في Drive" : "ابدأ التصميم"}
+                            </Button>
+                        </div>
+                    </nav>
+
+                    {/* Hero Section */}
+                    <header style={{padding: "200px 20px 100px", textAlign: "center"}}>
+                        <h1 style={{fontSize: "4.5rem", fontWeight: "900", lineHeight: "1.1", marginBottom: "25px"}}>
+                            صمم كل شيء <br/> <span style={{color: C.accent2}}>بلمسة واحدة</span>
+                        </h1>
+                        <p style={{color: C.muted, fontSize: "1.2rem", maxWidth: "700px", margin: "0 auto 40px"}}>
+                            منصة Artiva تمنحك أدوات "البرو" مجاناً. مسح خلفية، ذكاء اصطناعي، وتصدير عالي الجودة بدون قيود.
+                        </p>
+                        <div style={{display: "flex", justifyContent: "center", gap: "20px"}}>
+                            <Button style={{padding: "18px 45px", fontSize: "1.1rem"}}>إنشاء تصميم جديد</Button>
+                            {isAdmin && <Button variant="admin">لوحة التحكم</Button>}
+                        </div>
+                    </header>
+
+                    {/* Login Modal */}
+                    {showLogin && (
+                        <div style={{
+                            position: "fixed", top:0, left:0, width: "100%", height: "100%",
+                            background: "rgba(0,0,0,0.9)", display: "flex", justifyContent: "center",
+                            alignItems: "center", zIndex: 2000
+                        }}>
+                            <div style={{background: C.surface, padding: "50px", borderRadius: "24px", border: `1px solid ${C.border}`, width: "350px"}}>
+                                <h3 style={{marginBottom: "20px", textAlign: "center"}}>دخول الإدارة</h3>
+                                <input 
+                                    type="text" placeholder="Admin Name" 
+                                    style={{width: "100%", padding: "12px", marginBottom: "15px", borderRadius: "8px", border: "none", background: "#000", color: "#fff"}}
+                                    onChange={e => setCredentials({...credentials, user: e.target.value})}
+                                />
+                                <input 
+                                    type="password" placeholder="Password" 
+                                    style={{width: "100%", padding: "12px", marginBottom: "20px", borderRadius: "8px", border: "none", background: "#000", color: "#fff"}}
+                                    onChange={e => setCredentials({...credentials, pass: e.target.value})}
+                                />
+                                <Button variant="primary" style={{width: "100%"}} onClick={handleLogin}>تفعيل الصلاحيات</Button>
+                                <button onClick={() => setShowLogin(false)} style={{width: "100%", background: "none", border: "none", color: C.muted, marginTop: "15px", cursor: "pointer"}}>إلغاء</button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<ArtivaApp />);
+    </script>
 </body>
 </html>
