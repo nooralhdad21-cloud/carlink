@@ -1,115 +1,51 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>Mini Canva Editor</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artiva | منصة التصميم الاحترافية المجانية</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial;
-  background: #111;
-  color: white;
-}
+    <style>
+        /* إعدادات المتصفح الأساسية لضمان عمل التصميم بشكل صحيح */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #07060F; /* نفس لون الخلفية في كود JSX */
+            color: #F0EEF8;
+            font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
 
-.toolbar {
-  padding: 10px;
-  background: #222;
-}
+        /* حاوية مشروع React */
+        #root {
+            min-height: 100vh;
+        }
 
-button {
-  padding: 10px;
-  margin-right: 5px;
-  cursor: pointer;
-}
-
-#canvas {
-  width: 100%;
-  height: 90vh;
-  background: #fff;
-  position: relative;
-  overflow: hidden;
-}
-
-.text {
-  position: absolute;
-  padding: 5px 10px;
-  background: rgba(0,0,0,0.1);
-  cursor: move;
-}
-</style>
-
+        /* تأثير تحميل بسيط للموقع قبل تشغيل الجافا سكريبت */
+        .loader {
+            display: flex;
+            justify-content: center;
+            alignItems: center;
+            height: 100vh;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #7C5CFC;
+        }
+    </style>
 </head>
 <body>
 
-<div class="toolbar">
-  <button onclick="addText()">➕ إضافة نص</button>
-  <button onclick="save()">💾 حفظ</button>
-  <button onclick="clearCanvas()">🗑️ مسح</button>
-</div>
+    <div id="root">
+        <div class="loader">جاري تحميل Artiva...</div>
+    </div>
 
-<div id="canvas"></div>
-
-<script>
-let elements = JSON.parse(localStorage.getItem("design")) || [];
-
-function render() {
-  const canvas = document.getElementById("canvas");
-  canvas.innerHTML = "";
-
-  elements.forEach((el, index) => {
-    let div = document.createElement("div");
-    div.className = "text";
-    div.innerText = el.text;
-    div.style.left = el.x + "px";
-    div.style.top = el.y + "px";
-
-    // سحب
-    let offsetX, offsetY;
-
-    div.onmousedown = function(e) {
-      offsetX = e.offsetX;
-      offsetY = e.offsetY;
-
-      document.onmousemove = function(e) {
-        el.x = e.pageX - offsetX;
-        el.y = e.pageY - offsetY;
-        render();
-      };
-
-      document.onmouseup = function() {
-        document.onmousemove = null;
-        save();
-      };
-    };
-
-    canvas.appendChild(div);
-  });
-}
-
-function addText() {
-  elements.push({
-    text: "نص جديد",
-    x: 50,
-    y: 50
-  });
-  render();
-  save();
-}
-
-function save() {
-  localStorage.setItem("design", JSON.stringify(elements));
-}
-
-function clearCanvas() {
-  elements = [];
-  save();
-  render();
-}
-
-// تحميل عند فتح الصفحة
-render();
-</script>
+    <script src="https://apis.google.com/js/api.js"></script>
 
 </body>
 </html>
