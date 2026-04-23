@@ -1,0 +1,40 @@
+{
+  "name": "منصة دينار وذهب",
+  "short_name": "دينار وذهب",
+  "description": "المنصة المالية العراقية — حماية مواطن عراقي من الغش والاحتيال",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070709",
+  "theme_color": "#C9A227",
+  "orientation": "portrait-primary",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["finance", "utilities"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect fill='%23070709' width='512' height='512' rx='80'/><circle cx='256' cy='256' r='160' fill='%23C9A227'/><text x='256' y='320' font-size='200' text-anchor='middle' fill='%23070709'>د</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "الحاسبة",
+      "short_name": "حاسبة",
+      "description": "احسب قيمة الذهب والعملات",
+      "url": "/#calc",
+      "icons": [{"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='70' font-size='70' text-anchor='middle'>🧮</text></svg>", "sizes": "96x96"}]
+    },
+    {
+      "name": "البورصة",
+      "short_name": "بورصة",
+      "description": "شاهد أسعار السوق",
+      "url": "/#charts",
+      "icons": [{"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='70' font-size='70' text-anchor='middle'>📊</text></svg>", "sizes": "96x96"}]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

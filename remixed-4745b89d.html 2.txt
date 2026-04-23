@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دينار وذهب | المنصة المالية العراقية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg0:#070709;--bg1:#0e0e12;--bg2:#15151b;--bg3:#1c1c24;--bg4:#23232d;
+  --gold:#C9A227;--goldL:#E8C84A;--goldD:#9B7B1A;
+  --goldGlow:rgba(201,162,39,0.12);--goldBorder:rgba(201,162,39,0.22);
+  --t1:#F2F2F2;--t2:#A0A0B0;--t3:#505065;
+  --ok:#27AE60;--warn:#E67E22;--bad:#E74C3C;--info:#3498DB;--purple:#8B5CF6;
+  --sayrafa:#00C4FF;
+  --r:14px;--rs:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Cairo',sans-serif;background:var(--bg0);color:var(--t1);direction:rtl;min-height:100vh;overflow-x:hidden;
+  background-image:radial-gradient(ellipse 70% 50% at 10% 10%,rgba(201,162,39,0.04) 0%,transparent 55%),
+                   radial-gradient(ellipse 50% 60% at 90% 90%,rgba(0,196,255,0.03) 0%,transparent 55%);}
+
+/* TICKER */
+.ticker-wrap{background:var(--bg1);border-bottom:1px solid rgba(201,162,39,0.12);padding:7px 0;overflow:hidden;position:relative}
+.ticker-wrap::before,.ticker-wrap::after{content:'';position:absolute;top:0;width:80px;height:100%;z-index:2;pointer-events:none}
+.ticker-wrap::before{right:0;background:linear-gradient(to left,var(--bg1),transparent)}
+.ticker-wrap::after{left:0;background:linear-gradient(to right,var(--bg1),transparent)}
+.ticker{display:flex;gap:0;animation:tick 40s linear infinite;width:max-content}
+.ticker:hover{animation-play-state:paused}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ti{display:flex;align-items:center;gap:6px;white-space:nowrap;font-size:12.5px;padding:0 18px;border-right:1px solid rgba(255,255,255,.05)}
+.tl{color:var(--t3);font-size:10.5px}
+.tv{color:var(--t1);font-weight:700}
+.tc{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:600}
+.up{background:rgba(39,174,96,.15);color:var(--ok)}
+.dn{background:rgba(231,76,60,.15);color:var(--bad)}
+.nt{background:rgba(80,80,100,.2);color:var(--t3)}
+.sc{background:rgba(0,196,255,.15);color:var(--sayrafa)}
+.dot{width:6px;height:6px;background:var(--ok);border-radius:50%;animation:blink 2s ease-in-out infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 5px var(--ok)}50%{opacity:.2;box-shadow:none}}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:200;background:rgba(7,7,9,.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--goldBorder);padding:0 24px}
+.hi{max-width:1380px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:62px}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none}
+.logo-i{width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,var(--gold),var(--goldL));display:flex;align-items:center;justify-content:center;font-size:18px;color:#060608;font-weight:900}
+.logo-t{font-size:20px;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--goldL));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.logo-s{font-size:10.5px;color:var(--t3)}
+nav{display:flex;gap:2px}
+.nb{padding:8px 16px;border:none;background:transparent;color:var(--t2);font-family:'Cairo',sans-serif;font-size:13.5px;font-weight:500;border-radius:var(--rs);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+.nb:hover{background:var(--goldGlow);color:var(--goldL)}
+.nb.on{background:var(--goldGlow);color:var(--gold);border:1px solid var(--goldBorder)}
+.hburger{display:none;background:transparent;border:none;cursor:pointer;color:var(--t2);font-size:20px;padding:6px}
+.mnav{display:none;flex-direction:column;gap:2px;background:var(--bg1);border-bottom:1px solid var(--goldBorder);padding:10px 18px}
+.mnav.open{display:flex}
+
+/* OFFLINE */
+.offb{display:none;align-items:center;gap:8px;background:rgba(231,76,60,.08);border-bottom:1px solid rgba(231,76,60,.25);padding:8px 24px;font-size:12px;color:var(--bad)}
+.offb.show{display:flex}
+
+/* MAIN */
+main{max-width:1380px;margin:0 auto;padding:28px 24px}
+.sec{display:none;animation:fadeUp .3s ease}
+.sec.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ph{margin-bottom:24px}
+.ph h1{font-size:26px;font-weight:700;margin-bottom:5px}
+.ph h1 span{color:var(--gold)}
+.ph p{font-size:13.5px;color:var(--t2)}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:20px}
+.cgold{border-color:var(--goldBorder)}
+.ct{font-size:14.5px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:7px}
+
+/* RATE CARDS ROW */
+.rstrip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:10px}
+.rc{border-radius:var(--r);padding:16px 18px;border:1px solid;position:relative;overflow:hidden;transition:transform .2s}
+.rc:hover{transform:translateY(-2px)}
+.rc-off{background:linear-gradient(135deg,rgba(39,174,96,.08),rgba(39,174,96,.04));border-color:rgba(39,174,96,.25)}
+.rc-say{background:linear-gradient(135deg,rgba(0,196,255,.1),rgba(0,196,255,.04));border-color:rgba(0,196,255,.3)}
+.rc-par{background:linear-gradient(135deg,rgba(230,126,34,.08),rgba(230,126,34,.04));border-color:rgba(230,126,34,.25)}
+.rc-lbl{font-size:10.5px;color:var(--t2);margin-bottom:4px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+.rc-main{font-size:28px;font-weight:800;line-height:1.1;margin-bottom:4px}
+.rc-off .rc-main{color:var(--ok)}
+.rc-say .rc-main{color:var(--sayrafa)}
+.rc-par .rc-main{color:var(--warn)}
+.rc-sub{font-size:11px;color:var(--t3)}
+.rc-badge{position:absolute;top:12px;left:12px;font-size:9px;padding:2px 7px;border-radius:4px;font-weight:700;letter-spacing:.4px}
+.rc-off .rc-badge{background:rgba(39,174,96,.15);color:var(--ok)}
+.rc-say .rc-badge{background:rgba(0,196,255,.15);color:var(--sayrafa)}
+.rc-par .rc-badge{background:rgba(230,126,34,.15);color:var(--warn)}
+
+/* EXAMPLE BOX */
+.eg{background:var(--bg3);border:1px solid rgba(255,255,255,.05);border-radius:var(--rs);padding:12px 14px;font-size:12.5px;color:var(--t2);line-height:1.8;margin-bottom:8px}
+.eg b{color:var(--t1)}
+
+/* MARKET STRIP */
+.mstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.mc{background:var(--bg2);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:16px;transition:border-color .2s,transform .2s;cursor:default}
+.mc:hover{border-color:var(--goldBorder);transform:translateY(-2px)}
+.mc-l{font-size:10.5px;color:var(--t3);margin-bottom:7px;text-transform:uppercase;letter-spacing:.4px}
+.mc-v{font-size:22px;font-weight:700;color:var(--t1);margin-bottom:5px;transition:color .4s}
+.mc-c{font-size:11.5px;display:flex;align-items:center;gap:4px}
+
+/* CALC GRID */
+.cg{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+.tbbar{display:flex;background:var(--bg3);border-radius:var(--rs);padding:3px;gap:3px;margin-bottom:18px}
+.tb{flex:1;padding:9px 6px;border:none;background:transparent;color:var(--t2);font-family:'Cairo',sans-serif;font-size:13px;font-weight:500;border-radius:6px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px}
+.tb.on{background:var(--gold);color:#060608;font-weight:700}
+.fg{margin-bottom:14px}
+label{display:block;font-size:11.5px;color:var(--t2);margin-bottom:6px;font-weight:600;letter-spacing:.3px}
+input,select{width:100%;padding:10px 13px;background:var(--bg3);border:1px solid rgba(255,255,255,.08);border-radius:var(--rs);color:var(--t1);font-family:'Cairo',sans-serif;font-size:14.5px;outline:none;transition:border-color .2s;direction:rtl;-webkit-appearance:none}
+input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,0.1)}
+input::placeholder{color:var(--t3)}
+select option{background:var(--bg3)}
+.iw{position:relative}
+.iw input{padding-left:55px}
+.iu{position:absolute;left:0;top:0;bottom:0;width:50px;display:flex;align-items:center;justify-content:center;background:rgba(201,162,39,0.08);border-radius:0 var(--rs) var(--rs) 0;color:var(--gold);font-size:10.5px;font-weight:700;border-right:1px solid var(--goldBorder)}
+.btn-c{width:100%;padding:12px;background:linear-gradient(135deg,var(--gold),var(--goldL));border:none;border-radius:var(--rs);color:#060608;font-family:'Cairo',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px}
+.btn-c:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(201,162,39,.3)}
+.bsm{padding:6px 13px;border:1px solid var(--goldBorder);background:transparent;color:var(--gold);font-family:'Cairo',sans-serif;font-size:12.5px;border-radius:var(--rs);cursor:pointer;transition:all .2s}
+.bsm:hover{background:var(--goldGlow)}
+
+/* RESULT */
+.res{background:linear-gradient(135deg,rgba(201,162,39,.07),rgba(201,162,39,.03));border:1px solid var(--goldBorder);border-radius:var(--r);padding:18px;margin-top:14px;display:none}
+.res.show{display:block;animation:fadeUp .3s ease}
+.rm{text-align:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:12px}
+.rl{font-size:11px;color:var(--t2);margin-bottom:7px;letter-spacing:.5px}
+.rv{font-size:34px;font-weight:700;color:var(--gold);line-height:1.2}
+.rv .cur{font-size:14px;color:var(--t2);font-weight:400}
+.brow{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:12.5px;border-bottom:1px solid rgba(255,255,255,.04)}
+.brow:last-child{border-bottom:none}
+.bl{color:var(--t2)}
+.bv{color:var(--t1);font-weight:600}
+
+/* TRIPLE RESULT (Sayrafa compare) */
+.tri{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:14px 0}
+.tri-c{border-radius:var(--rs);padding:12px;text-align:center}
+.tri-off{background:rgba(39,174,96,.08);border:1px solid rgba(39,174,96,.2)}
+.tri-say{background:rgba(0,196,255,.08);border:1px solid rgba(0,196,255,.25)}
+.tri-par{background:rgba(230,126,34,.08);border:1px solid rgba(230,126,34,.2)}
+.tri-l{font-size:10px;color:var(--t2);margin-bottom:5px;font-weight:600}
+.tri-v{font-size:18px;font-weight:700}
+.tri-off .tri-v{color:var(--ok)}
+.tri-say .tri-v{color:var(--sayrafa)}
+.tri-par .tri-v{color:var(--warn)}
+.tri-d{font-size:10px;color:var(--t3);margin-top:3px}
+
+/* AI PANEL */
+.ai-hdr{display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.ai-ico{width:36px;height:36px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.tip{background:var(--bg3);border:1px solid rgba(255,255,255,.05);border-right:3px solid;border-radius:var(--rs);padding:10px 13px;margin-bottom:9px;font-size:12.5px;line-height:1.75;color:var(--t2)}
+.tip.ok{border-right-color:var(--ok)}.tip.warn{border-right-color:var(--warn)}.tip.bad{border-right-color:var(--bad)}.tip.info{border-right-color:var(--info)}.tip.gold{border-right-color:var(--gold)}.tip.say{border-right-color:var(--sayrafa)}
+
+/* ALERT */
+.alf{display:flex;gap:7px;margin-top:12px}
+.alf input{flex:1;font-size:12.5px}
+.ali{display:flex;justify-content:space-between;align-items:center;background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:var(--rs);padding:7px 11px;font-size:12px;margin-bottom:5px}
+.ald{background:transparent;border:none;color:var(--bad);cursor:pointer;font-size:15px}
+
+/* CHARTS */
+.cc{background:var(--bg2);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:20px;margin-bottom:18px}
+.ch-hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.ch-t{font-size:15px;font-weight:600}
+.pbar{display:flex;gap:3px}
+.pb{padding:5px 12px;border:1px solid rgba(255,255,255,.08);background:transparent;color:var(--t2);font-family:'Cairo',sans-serif;font-size:11.5px;border-radius:6px;cursor:pointer;transition:all .2s}
+.pb.on{background:var(--goldGlow);border-color:var(--goldBorder);color:var(--gold)}
+
+/* SAYRAFA INFO BOX */
+.sbox{background:linear-gradient(135deg,rgba(0,196,255,.06),rgba(0,196,255,.02));border:1px solid rgba(0,196,255,.2);border-radius:var(--r);padding:16px 18px;margin-bottom:18px}
+.sb-title{font-size:14px;font-weight:700;color:var(--sayrafa);margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.sb-row{display:flex;justify-content:space-between;padding:5px 0;font-size:12.5px;border-bottom:1px solid rgba(0,196,255,.08)}
+.sb-row:last-child{border-bottom:none}
+.sb-l{color:var(--t2)}.sb-v{color:var(--t1);font-weight:600}
+
+/* CURRENCY TABLE */
+.ctbl{width:100%;border-collapse:collapse;font-size:13px}
+.ctbl th{text-align:right;padding:10px 13px;color:var(--t3);font-weight:600;font-size:10.5px;letter-spacing:.4px;border-bottom:1px solid rgba(255,255,255,.06);background:var(--bg1);text-transform:uppercase}
+.ctbl td{padding:12px 13px;border-bottom:1px solid rgba(255,255,255,.04)}
+.ctbl tr:hover td{background:rgba(201,162,39,.025)}
+.cflag{display:flex;align-items:center;gap:9px}
+.flag{font-size:20px;line-height:1}
+.rbg{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10.5px;font-weight:700}
+.sayrafa-row td{background:rgba(0,196,255,.03)!important}
+
+/* SPREAD INDICATOR */
+.spread{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;background:rgba(139,92,246,.15);color:var(--purple)}
+
+/* PROVINCE */
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pc{background:var(--bg2);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:14px;text-align:center;transition:border-color .2s}
+.pc:hover{border-color:var(--goldBorder)}
+.pn{font-size:12.5px;color:var(--t2);margin-bottom:6px}
+.pp{font-size:19px;font-weight:700;color:var(--gold)}
+.pd{font-size:10.5px;margin-top:3px}
+
+/* INFO GUIDE */
+.ig{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.ic{background:var(--bg2);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:18px;cursor:default;transition:all .2s}
+.ic:hover{border-color:var(--goldBorder);transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,162,39,.08)}
+.ii{font-size:26px;margin-bottom:10px}
+.it{font-size:14.5px;font-weight:600;margin-bottom:7px}
+.ix{font-size:12.5px;color:var(--t2);line-height:1.8}
+.itag{display:inline-block;margin-top:8px;padding:2px 9px;background:var(--goldGlow);color:var(--gold);border-radius:4px;font-size:10.5px;font-weight:600}
+
+/* GLOSSARY */
+.gi{background:var(--bg2);border:1px solid rgba(255,255,255,.06);border-radius:var(--rs);padding:14px 16px;margin-bottom:8px}
+.gt{font-size:14.5px;font-weight:700;color:var(--gold);margin-bottom:5px}
+.gd{font-size:12.5px;color:var(--t2);line-height:1.75}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg2);border:1px solid var(--goldBorder);border-radius:var(--r);padding:11px 20px;font-size:13.5px;color:var(--t1);z-index:9999;transition:transform .3s ease;box-shadow:0 8px 28px rgba(0,0,0,.6)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* CONVERTER RATE PICKER */
+.rtype-pick{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.rp{flex:1;min-width:80px;padding:8px 6px;border:1px solid rgba(255,255,255,.08);background:var(--bg3);border-radius:var(--rs);text-align:center;cursor:pointer;transition:all .2s;font-family:'Cairo',sans-serif;font-size:12px;color:var(--t2)}
+.rp.on-off{border-color:rgba(39,174,96,.4);background:rgba(39,174,96,.08);color:var(--ok)}
+.rp.on-say{border-color:rgba(0,196,255,.4);background:rgba(0,196,255,.08);color:var(--sayrafa)}
+.rp.on-par{border-color:rgba(230,126,34,.4);background:rgba(230,126,34,.08);color:var(--warn)}
+
+/* divider */
+.div{border:none;border-top:1px solid rgba(255,255,255,.05);margin:18px 0}
+
+@media(max-width:1000px){.cg{grid-template-columns:1fr}.rstrip{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:800px){nav{display:none}.hburger{display:block}.mstrip{grid-template-columns:repeat(2,1fr)}.ig{grid-template-columns:1fr}.pg{grid-template-columns:repeat(2,1fr)}.rstrip{grid-template-columns:1fr}}
+@media(max-width:500px){.mstrip{grid-template-columns:1fr}.tri{grid-template-columns:1fr}.pg{grid-template-columns:1fr 1fr}}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:var(--bg0)}
+::-webkit-scrollbar-thumb{background:var(--goldBorder);border-radius:2px}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap"><div class="ticker" id="ticker">
+  <div class="ti"><div class="dot"></div><span style="color:var(--t3);font-size:10px">مباشر</span></div>
+  <div class="ti"><span class="tl">ذهب 21 عيار</span><span class="tv" id="t-g21">290,000</span><span class="tc up" id="t-g21c">▲0.5%</span></div>
+  <div class="ti"><span class="tl">ذهب 24 عيار</span><span class="tv" id="t-g24">330,000</span><span class="tc up">▲0.3%</span></div>
+  <div class="ti"><span class="tl">فضة/غ</span><span class="tv">3,200</span><span class="tc dn">▼0.2%</span></div>
+  <div class="ti"><span class="tl">صيرفة</span><span class="tv" id="t-say" style="color:var(--sayrafa)">1,540</span><span class="tc sc">صيرفة</span></div>
+  <div class="ti"><span class="tl">موازي</span><span class="tv" id="t-par">1,480</span><span class="tc up">▲0.1%</span></div>
+  <div class="ti"><span class="tl">رسمي</span><span class="tv" id="t-off">1,310</span><span class="tc nt">ثابت</span></div>
+  <div class="ti"><span class="tl">يورو</span><span class="tv">1,720</span><span class="tc up">▲0.4%</span></div>
+  <div class="ti"><span class="tl">كويتي</span><span class="tv">5,030</span><span class="tc nt">ثابت</span></div>
+  <div class="ti"><span class="tl">برنت</span><span class="tv">85.4$</span><span class="tc up">▲1.1%</span></div>
+  <!-- dup -->
+  <div class="ti"><div class="dot"></div><span style="color:var(--t3);font-size:10px">مباشر</span></div>
+  <div class="ti"><span class="tl">ذهب 21 عيار</span><span class="tv">290,000</span><span class="tc up">▲0.5%</span></div>
+  <div class="ti"><span class="tl">ذهب 24 عيار</span><span class="tv">330,000</span><span class="tc up">▲0.3%</span></div>
+  <div class="ti"><span class="tl">فضة/غ</span><span class="tv">3,200</span><span class="tc dn">▼0.2%</span></div>
+  <div class="ti"><span class="tl">صيرفة</span><span class="tv" style="color:var(--sayrafa)">1,540</span><span class="tc sc">صيرفة</span></div>
+  <div class="ti"><span class="tl">موازي</span><span class="tv">1,480</span><span class="tc up">▲0.1%</span></div>
+  <div class="ti"><span class="tl">رسمي</span><span class="tv">1,310</span><span class="tc nt">ثابت</span></div>
+  <div class="ti"><span class="tl">يورو</span><span class="tv">1,720</span><span class="tc up">▲0.4%</span></div>
+  <div class="ti"><span class="tl">كويتي</span><span class="tv">5,030</span><span class="tc nt">ثابت</span></div>
+  <div class="ti"><span class="tl">برنت</span><span class="tv">85.4$</span><span class="tc up">▲1.1%</span></div>
+</div></div>
+
+<!-- HEADER -->
+<header>
+  <div class="hi">
+    <a class="logo" href="#"><div class="logo-i">د</div><div><div class="logo-t">دينار وذهب</div><div class="logo-s">المنصة المالية العراقية</div></div></a>
+    <nav>
+      <button class="nb on" onclick="showSec('calc')" id="n-calc">🧮 الحاسبة</button>
+      <button class="nb" onclick="showSec('charts')" id="n-charts">📊 البورصة</button>
+      <button class="nb" onclick="showSec('currency')" id="n-currency">💱 العملات</button>
+      <button class="nb" onclick="showSec('guide')" id="n-guide">📚 الدليل</button>
+    </nav>
+    <button class="hburger" onclick="toggleMnav()">☰</button>
+  </div>
+  <div class="mnav" id="mnav">
+    <button class="nb on" onclick="showSec('calc');toggleMnav()">🧮 الحاسبة</button>
+    <button class="nb" onclick="showSec('charts');toggleMnav()">📊 البورصة</button>
+    <button class="nb" onclick="showSec('currency');toggleMnav()">💱 العملات</button>
+    <button class="nb" onclick="showSec('guide');toggleMnav()">📚 الدليل</button>
+  </div>
+</header>
+<div class="offb" id="offb">⚠️ أنت غير متصل — آخر بيانات (<span id="cacheAge">—</span>)</div>
+<div class="toast" id="toast"></div>
+
+<main>
+
+<!-- ══════════ CALCULATOR ══════════ -->
+<section class="sec on" id="sec-calc">
+  <div class="ph"><h1>الحاسبة <span>الذكية</span></h1><p>احسب الذهب والعملات — مع مقارنة الصيرفة والسوق الموازي والسعر الرسمي</p></div>
+
+  <!-- 3 Rate Cards -->
+  <div class="rstrip">
+    <div class="rc rc-off"><div class="rc-badge">البنك المركزي</div><div class="rc-lbl">الرسمي</div><div class="rc-main" id="rc-off">1,310</div><div class="rc-sub">دينار للدولار — ثابت رسمياً</div></div>
+    <div class="rc rc-say"><div class="rc-badge">منصة CBI</div><div class="rc-lbl">الصيرفة</div><div class="rc-main" id="rc-say">1,540</div><div class="rc-sub">100$ = 154,000 دينار (أمس)</div></div>
+    <div class="rc rc-par"><div class="rc-badge">السوق الحرة</div><div class="rc-lbl">الموازي</div><div class="rc-main" id="rc-par">1,480</div><div class="rc-sub">دينار للدولار — متغير يومياً</div></div>
+  </div>
+  <div class="eg" style="margin-bottom:18px">
+    <b>مثال واقعي:</b> أمس الصيرفة أعطت 1,540 دينار/دولار — أي <b>100$ = 154,000 دينار</b>.
+    الموازي 1,480 دينار/دولار — <b>100$ = 148,000 دينار</b>.
+    الرسمي 1,310 — <b>100$ = 131,000 دينار</b>.
+    الفرق بين الصيرفة والرسمي = <b>23,000 دينار</b> على كل 100 دولار!
+  </div>
+
+  <!-- Market Strip -->
+  <div class="mstrip">
+    <div class="mc"><div class="mc-l">ذهب 21 / غرام</div><div class="mc-v" id="mc-g21">290,000</div><div class="mc-c up">▲ 0.5% اليوم</div></div>
+    <div class="mc"><div class="mc-l">ذهب 24 / غرام</div><div class="mc-v" id="mc-g24">330,000</div><div class="mc-c up">▲ 0.3% اليوم</div></div>
+    <div class="mc"><div class="mc-l">فضة / غرام</div><div class="mc-v" id="mc-ag">3,200</div><div class="mc-c dn">▼ 0.2% اليوم</div></div>
+    <div class="mc"><div class="mc-l">نفط برنت</div><div class="mc-v" style="font-size:18px">85.4 $</div><div class="mc-c up">▲ 1.1% اليوم</div></div>
+  </div>
+
+  <div class="cg">
+    <!-- CALCULATOR CARD -->
+    <div class="card cgold">
+      <div class="tbbar">
+        <button class="tb on" onclick="switchTab('gold')" id="tb-gold">🟡 الذهب</button>
+        <button class="tb" onclick="switchTab('silver')" id="tb-silver">⚪ الفضة</button>
+        <button class="tb" onclick="switchTab('currency')" id="tb-currency">💵 العملة</button>
+        <button class="tb" onclick="switchTab('sayrafa')" id="tb-sayrafa" style="color:var(--sayrafa)">🏧 الصيرفة</button>
+      </div>
+
+      <!-- GOLD -->
+      <div id="form-gold">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="fg"><label>العيار</label>
+            <select id="g-karat" onchange="calcGold()">
+              <option value="24">24 عيار — خالص 99.9%</option>
+              <option value="22">22 عيار — 91.7%</option>
+              <option value="21" selected>21 عيار — 87.5% ★</option>
+              <option value="18">18 عيار — 75%</option>
+              <option value="14">14 عيار — 58.3%</option>
+              <option value="10">10 عيار — 41.7%</option>
+            </select></div>
+          <div class="fg"><label>نوع القطعة</label>
+            <select id="g-type" onchange="calcGold()">
+              <option value="new">جديد (سعر كامل)</option>
+              <option value="used">مستعمل (خصم 10%)</option>
+              <option value="scrap">خردة (خصم 20%)</option>
+            </select></div>
+        </div>
+        <div class="fg"><label>الوزن بالغرام</label>
+          <div class="iw"><input type="number" id="g-weight" placeholder="مثال: 10.5" min="0" step="0.01" oninput="calcGold()"><div class="iu">غرام</div></div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="fg"><label>أجور الصياغة / غرام</label>
+            <div class="iw"><input type="number" id="g-craft" placeholder="0" min="0" oninput="calcGold()"><div class="iu">د.ع</div></div></div>
+          <div class="fg"><label>عمولة الصراف (%)</label>
+            <div class="iw"><input type="number" id="g-comm" placeholder="0" min="0" max="20" step="0.5" oninput="calcGold()"><div class="iu">%</div></div></div>
+        </div>
+        <div class="fg"><label>العدد (قطع)</label>
+          <div class="iw"><input type="number" id="g-qty" placeholder="1" min="1" value="1" oninput="calcGold()"><div class="iu">قطعة</div></div></div>
+        <button class="btn-c" onclick="calcGold()">⚡ احسب قيمة الذهب</button>
+        <div class="res" id="res-gold">
+          <div class="rm"><div class="rl">القيمة الإجمالية</div><div class="rv" id="rv-gold">0 <span class="cur">دينار عراقي</span></div></div>
+          <div id="rb-gold"></div>
+          <div style="display:flex;gap:7px;margin-top:12px">
+            <button class="bsm" onclick="copyResult('gold')">📋 نسخ</button>
+            <button class="bsm" onclick="shareResult('gold')">📤 مشاركة</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SILVER -->
+      <div id="form-silver" style="display:none">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="fg"><label>الوزن (غرام)</label>
+            <div class="iw"><input type="number" id="s-weight" placeholder="مثال: 20" min="0" step="0.01" oninput="calcSilver()"><div class="iu">غرام</div></div></div>
+          <div class="fg"><label>نقاء الفضة</label>
+            <select id="s-purity" onchange="calcSilver()">
+              <option value="999">999 — خالصة 99.9%</option>
+              <option value="925" selected>925 — ستيرلنغ ★</option>
+              <option value="900">900 — كوين سيلفر</option>
+              <option value="800">800 — أوروبية</option>
+              <option value="500">500 — منخفضة</option>
+            </select></div>
+        </div>
+        <div class="fg"><label>نوع</label>
+          <select id="s-type" onchange="calcSilver()">
+            <option value="new">جديد</option>
+            <option value="used">مستعمل (-8%)</option>
+            <option value="coin">عملة معدنية (+5%)</option>
+          </select></div>
+        <div class="fg"><label>أجور الصياغة (اختياري)</label>
+          <div class="iw"><input type="number" id="s-craft" placeholder="0" min="0" oninput="calcSilver()"><div class="iu">د.ع</div></div></div>
+        <button class="btn-c" onclick="calcSilver()">⚡ احسب قيمة الفضة</button>
+        <div class="res" id="res-silver">
+          <div class="rm"><div class="rl">قيمة الفضة الإجمالية</div><div class="rv" id="rv-silver">0 <span class="cur">دينار</span></div></div>
+          <div id="rb-silver"></div>
+        </div>
+      </div>
+
+      <!-- CURRENCY -->
+      <div id="form-currency" style="display:none">
+        <div class="fg"><label>من عملة</label>
+          <select id="c-from" onchange="calcCurr()">
+            <option value="USD">🇺🇸 دولار أمريكي (USD)</option>
+            <option value="EUR">🇪🇺 يورو (EUR)</option>
+            <option value="GBP">🇬🇧 جنيه إسترليني (GBP)</option>
+            <option value="SAR">🇸🇦 ريال سعودي (SAR)</option>
+            <option value="TRY">🇹🇷 ليرة تركية (TRY)</option>
+            <option value="AED">🇦🇪 درهم إماراتي (AED)</option>
+            <option value="KWD">🇰🇼 دينار كويتي (KWD)</option>
+            <option value="IRR">🇮🇷 ريال إيراني (IRR)</option>
+            <option value="IQD">🇮🇶 دينار عراقي (IQD)</option>
+            <option value="CNY">🇨🇳 يوان صيني (CNY)</option>
+            <option value="INR">🇮🇳 روبية هندية (INR)</option>
+            <option value="JOD">🇯🇴 دينار أردني (JOD)</option>
+          </select></div>
+        <div class="fg"><label>المبلغ</label>
+          <div class="iw"><input type="number" id="c-amount" placeholder="مثال: 100" min="0" oninput="calcCurr()"><div class="iu" id="c-unit">USD</div></div></div>
+        <div class="fg"><label>إلى عملة</label>
+          <select id="c-to" onchange="calcCurr()">
+            <option value="IQD">🇮🇶 دينار عراقي (IQD)</option>
+            <option value="USD">🇺🇸 دولار (USD)</option>
+            <option value="EUR">🇪🇺 يورو (EUR)</option>
+            <option value="SAR">🇸🇦 ريال سعودي (SAR)</option>
+            <option value="AED">🇦🇪 درهم (AED)</option>
+            <option value="KWD">🇰🇼 كويتي (KWD)</option>
+          </select></div>
+        <label style="margin-bottom:8px">اختر نوع السعر</label>
+        <div class="rtype-pick">
+          <div class="rp on-off" id="rp-off" onclick="selRate('off')">🏛️ رسمي<br><small>1,310</small></div>
+          <div class="rp" id="rp-say" onclick="selRate('say')">🏧 صيرفة<br><small>1,540</small></div>
+          <div class="rp" id="rp-par" onclick="selRate('par')">🏪 موازي<br><small>1,480</small></div>
+        </div>
+        <button class="btn-c" onclick="calcCurr()">⚡ احسب التحويل</button>
+        <div class="res" id="res-curr">
+          <div class="rm"><div class="rl">المبلغ المحوّل</div><div class="rv" id="rv-curr">0</div></div>
+          <div class="tri" id="tri-curr"></div>
+          <div id="rb-curr"></div>
+          <div style="display:flex;gap:7px;margin-top:12px"><button class="bsm" onclick="copyResult('curr')">📋 نسخ</button></div>
+        </div>
+      </div>
+
+      <!-- SAYRAFA TAB -->
+      <div id="form-sayrafa" style="display:none">
+        <div class="sbox" style="margin-bottom:14px">
+          <div class="sb-title">🏧 منصة الصيرفة — البنك المركزي العراقي</div>
+          <div class="sb-row"><div class="sb-l">سعر الصيرفة اليوم</div><div class="sb-v" style="color:var(--sayrafa)">1,540 دينار/دولار</div></div>
+          <div class="sb-row"><div class="sb-l">سعر البنك الرسمي</div><div class="sb-v" style="color:var(--ok)">1,310 دينار/دولار</div></div>
+          <div class="sb-row"><div class="sb-l">السوق الموازي</div><div class="sb-v" style="color:var(--warn)">1,480 دينار/دولار</div></div>
+          <div class="sb-row"><div class="sb-l">فرق الصيرفة عن الرسمي</div><div class="sb-v" style="color:var(--bad)">+230 دينار/دولار</div></div>
+          <div class="sb-row"><div class="sb-l">فرق الصيرفة عن الموازي</div><div class="sb-v" style="color:var(--bad)">+60 دينار/دولار</div></div>
+          <div class="sb-row"><div class="sb-l">الحد اليومي للفرد</div><div class="sb-v">250 دولار</div></div>
+          <div class="sb-row"><div class="sb-l">الحد الشهري</div><div class="sb-v">3,000 دولار</div></div>
+        </div>
+        <div class="fg"><label>أدخل المبلغ بالدولار</label>
+          <div class="iw"><input type="number" id="say-usd" placeholder="مثال: 100" min="0" oninput="calcSayrafa()"><div class="iu">USD</div></div></div>
+        <button class="btn-c" onclick="calcSayrafa()" style="background:linear-gradient(135deg,#0088aa,var(--sayrafa))">🏧 قارن الأسعار الثلاثة</button>
+        <div class="res" id="res-say" style="border-color:rgba(0,196,255,.3)">
+          <div class="rm"><div class="rl" style="color:var(--sayrafa)">مقارنة السعر الثلاثية</div></div>
+          <div class="tri" id="tri-say"></div>
+          <div id="rb-say"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="ai-hdr"><div class="ai-ico">🤖</div><div><div style="font-size:14px;font-weight:600">مستشار AI</div><div style="font-size:11px;color:var(--t3)">تحليل فوري لكل عملية</div></div></div>
+        <div id="ai-tips"><div class="tip info">💡 أدخل بيانات الحاسبة وسأقدم تحليلاً مبنياً على أسعار اليوم مع نصائح عملية.</div></div>
+      </div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="ct">🔔 تنبيهات السعر</div>
+        <div class="alf"><input type="number" id="alert-p" placeholder="سعر تنبيه ذهب 21" style="font-size:12px"><button class="bsm" onclick="addAlert()">+ إضافة</button></div>
+        <div id="alert-list"></div>
+      </div>
+      <div class="card">
+        <div class="ct">📡 نبض السوق</div>
+        <div class="tip say">🏧 الصيرفة اليوم أعطت أفضل سعر (1,540) — أعلى بـ60 دينار من الموازي.</div>
+        <div class="tip ok">✅ ذهب 21 في منطقة ارتفاع معتدل — مناسب للادخار الطويل.</div>
+        <div class="tip warn">⚠️ الفرق الصيرفة/الرسمي = 230 دينار/دولار — اختر بعناية حسب حاجتك.</div>
+        <div class="tip info">📊 الفضة انخفضت هذا الأسبوع — قد تكون فرصة شراء.</div>
+        <div style="font-size:10.5px;color:var(--t3);margin-top:10px;text-align:center">آخر تحديث: <span id="last-upd">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Province Grid -->
+  <div style="margin-top:24px">
+    <div style="font-size:15px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:7px">🗺️ أسعار الذهب 21 — محافظات العراق (دينار/غرام)</div>
+    <div class="pg" id="prov-grid"></div>
+  </div>
+</section>
+
+<!-- ══════════ CHARTS ══════════ -->
+<section class="sec" id="sec-charts">
+  <div class="ph"><h1>مشاهدة <span>البورصة</span></h1><p>مخططات تفاعلية للذهب والدولار والصيرفة</p></div>
+
+  <!-- Rate History Chart -->
+  <div class="cc">
+    <div class="ch-hdr">
+      <div class="ch-t">📈 الذهب 21 عيار — دينار عراقي / غرام</div>
+      <div class="pbar">
+        <button class="pb on" onclick="updGold('7d',this)">٧ أيام</button>
+        <button class="pb" onclick="updGold('30d',this)">شهر</button>
+        <button class="pb" onclick="updGold('90d',this)">٣ أشهر</button>
+        <button class="pb" onclick="updGold('1y',this)">سنة</button>
+      </div>
+    </div>
+    <div style="position:relative;height:260px"><canvas id="ch-gold"></canvas></div>
+  </div>
+
+  <!-- Dollar 3 rates chart -->
+  <div class="cc">
+    <div class="ch-hdr">
+      <div class="ch-t">💵 الدولار مقابل الدينار — مقارنة الأسعار الثلاثة</div>
+      <div style="display:flex;gap:10px;font-size:11.5px">
+        <span style="color:var(--ok)">● رسمي</span>
+        <span style="color:var(--sayrafa)">● صيرفة</span>
+        <span style="color:var(--warn)">● موازي</span>
+      </div>
+    </div>
+    <div style="position:relative;height:220px"><canvas id="ch-usd3"></canvas></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="cc">
+      <div class="ch-hdr"><div class="ch-t">⚪ الفضة (د.ع/غرام)</div></div>
+      <div style="position:relative;height:180px"><canvas id="ch-silver"></canvas></div>
+    </div>
+    <div class="cc">
+      <div class="ch-hdr"><div class="ch-t">🛢️ نفط برنت (دولار/برميل)</div></div>
+      <div style="position:relative;height:180px"><canvas id="ch-oil"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Spread chart -->
+  <div class="cc">
+    <div class="ch-hdr"><div class="ch-t">📊 فارق الصيرفة — موازي — رسمي (آخر 30 يوم)</div></div>
+    <div style="position:relative;height:200px"><canvas id="ch-spread"></canvas></div>
+  </div>
+
+  <!-- Buy/sell comparison -->
+  <div class="cc">
+    <div class="ch-hdr"><div class="ch-t">⚖️ شراء مقابل بيع — ذهب 21 (الأشهر الأخيرة)</div></div>
+    <div style="position:relative;height:200px"><canvas id="ch-buysell"></canvas></div>
+  </div>
+</section>
+
+<!-- ══════════ CURRENCY ══════════ -->
+<section class="sec" id="sec-currency">
+  <div class="ph"><h1>أسعار <span>العملات</span></h1><p>أسعار الصرف الثلاثة — الرسمي والصيرفة والموازي — مقارنة شاملة</p></div>
+
+  <!-- Sayrafa Explain Box -->
+  <div class="sbox" style="margin-bottom:20px">
+    <div class="sb-title">🏧 ما هي منصة الصيرفة؟</div>
+    <div style="font-size:12.5px;color:var(--t2);line-height:1.9;margin-bottom:10px">
+      الصيرفة هي منصة إلكترونية أطلقها البنك المركزي العراقي (CBI) لبيع الدولار بسعر أعلى من الرسمي لكن أقل أو قريب من الموازي.
+      الهدف امتصاص الضغط عن السوق الموازية. يمكن للأفراد شراء حتى 250 دولار يومياً.
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+      <div style="text-align:center;padding:10px;background:rgba(39,174,96,.07);border-radius:var(--rs);border:1px solid rgba(39,174,96,.15)">
+        <div style="font-size:10px;color:var(--t3);margin-bottom:4px">الرسمي</div>
+        <div style="font-size:22px;font-weight:700;color:var(--ok)" id="ex-off">1,310</div>
+        <div style="font-size:10px;color:var(--t3)">100$ = <span id="ex-off-100">131,000</span></div>
+      </div>
+      <div style="text-align:center;padding:10px;background:rgba(0,196,255,.07);border-radius:var(--rs);border:1px solid rgba(0,196,255,.2)">
+        <div style="font-size:10px;color:var(--t3);margin-bottom:4px">الصيرفة</div>
+        <div style="font-size:22px;font-weight:700;color:var(--sayrafa)" id="ex-say">1,540</div>
+        <div style="font-size:10px;color:var(--t3)">100$ = <span id="ex-say-100">154,000</span></div>
+      </div>
+      <div style="text-align:center;padding:10px;background:rgba(230,126,34,.07);border-radius:var(--rs);border:1px solid rgba(230,126,34,.2)">
+        <div style="font-size:10px;color:var(--t3);margin-bottom:4px">الموازي</div>
+        <div style="font-size:22px;font-weight:700;color:var(--warn)" id="ex-par">1,480</div>
+        <div style="font-size:10px;color:var(--t3)">100$ = <span id="ex-par-100">148,000</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full Currency Table -->
+  <div class="card" style="margin-bottom:18px">
+    <div class="ct">💱 جدول العملات الشامل — الرسمي / الصيرفة / الموازي</div>
+    <table class="ctbl">
+      <thead>
+        <tr>
+          <th>العملة</th>
+          <th style="color:var(--ok)">رسمي (شراء/بيع)</th>
+          <th style="color:var(--sayrafa)">صيرفة</th>
+          <th style="color:var(--warn)">موازي (شراء/بيع)</th>
+          <th>فارق الصيرفة</th>
+          <th>تغيير اليوم</th>
+        </tr>
+      </thead>
+      <tbody id="tbl-main"></tbody>
+    </table>
+  </div>
+
+  <!-- Global Currencies -->
+  <div class="card" style="margin-bottom:18px">
+    <div class="ct">🌍 العملات العالمية مقابل الدينار (بسعر الصيرفة)</div>
+    <table class="ctbl">
+      <thead><tr><th>الدولة / العملة</th><th>رمز</th><th style="color:var(--sayrafa)">صيرفة (د.ع)</th><th style="color:var(--ok)">رسمي (د.ع)</th><th style="color:var(--warn)">موازي (د.ع)</th><th>تغيير</th></tr></thead>
+      <tbody id="tbl-global"></tbody>
+    </table>
+  </div>
+
+  <!-- Transfer Fees Box -->
+  <div class="card">
+    <div class="ct">💸 أفضل طريقة لتحويل الأموال — مقارنة</div>
+    <table class="ctbl">
+      <thead><tr><th>الطريقة</th><th>السعر المستخدم</th><th>الرسوم</th><th>الوقت</th><th>التقييم</th></tr></thead>
+      <tbody>
+        <tr><td><b>🏧 منصة الصيرفة</b></td><td style="color:var(--sayrafa)">1,540</td><td>مجاناً</td><td>فوري</td><td><span class="rbg up">★★★★★ الأفضل</span></td></tr>
+        <tr><td><b>🏪 الصراف (موازي)</b></td><td style="color:var(--warn)">1,475–1,490</td><td>0.5–1%</td><td>فوري</td><td><span class="rbg" style="background:rgba(230,126,34,.15);color:var(--warn)">★★★★☆ جيد</span></td></tr>
+        <tr><td><b>🏦 البنك الرسمي</b></td><td style="color:var(--ok)">1,310</td><td>0.2%</td><td>1–2 أيام</td><td><span class="rbg dn">★★☆☆☆ خسارة</span></td></tr>
+        <tr><td><b>📱 تحويل إلكتروني</b></td><td style="color:var(--t2)">متفاوت</td><td>1–3%</td><td>1–24 ساعة</td><td><span class="rbg" style="background:rgba(52,152,219,.15);color:var(--info)">★★★☆☆ متوسط</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════ GUIDE ══════════ -->
+<section class="sec" id="sec-guide">
+  <div class="ph"><h1>دليل <span>المعلومات</span></h1><p>كل شيء تحتاج معرفته — بلهجة عراقية بسيطة</p></div>
+
+  <!-- Sayrafa full guide -->
+  <div class="sbox" style="margin-bottom:20px">
+    <div class="sb-title">🏧 الدليل الكامل لمنصة الصيرفة</div>
+    <div style="font-size:12.5px;color:var(--t2);line-height:1.9">
+      <p style="margin-bottom:8px"><b style="color:var(--sayrafa)">ما هي؟</b> منصة رسمية أطلقها البنك المركزي العراقي عام 2020 كحل وسط بين السعر الرسمي والسوق الموازية.</p>
+      <p style="margin-bottom:8px"><b style="color:var(--sayrafa)">كيف أستخدمها؟</b> تذهب لأي مصرف معتمد أو عبر تطبيق بعض البنوك — تقدم هويتك وتحدد المبلغ (حتى 250$ يومياً).</p>
+      <p style="margin-bottom:8px"><b style="color:var(--sayrafa)">سعر أمس:</b> 1,540 دينار للدولار — أي 100 دولار = 154,000 دينار. بينما الرسمي يعطيك 131,000 فقط!</p>
+      <p><b style="color:var(--sayrafa)">نصيحة:</b> إذا عندك دولارات وتريد تصريفها — الصيرفة أفضل من البنك بفارق كبير. لكن الموازي أحياناً يعطي 1,490–1,500 فتحقق أولاً.</p>
+    </div>
+  </div>
+
+  <div class="ig">
+    <div class="ic"><div class="ii">🥇</div><div class="it">عيارات الذهب — الفرق عملياً</div>
+      <div class="ix">الذهب 24 عيار = خالص تماماً، لكنه ناعم ويخدش بسهولة. الـ21 = أقوى وأكثر متانة وهو الأشهر في العراق. الـ18 = أرخص لكن قيمته أقل عند إعادة البيع. القاعدة: كلما ارتفع العيار كلما ارتفع السعر وانخفضت المتانة.</div>
+      <span class="itag">الأكثر تداولاً</span></div>
+
+    <div class="ic"><div class="ii">⚖️</div><div class="it">المثقال والأونصة — حساب سريع</div>
+      <div class="ix">المثقال العراقي = 4.25 غرام. الأونصة التروي = 31.1 غرام. إذا سمعت "أونصة ذهب = 3,350 دولار" — قسّمها على 31.1 ثم اضرب بسعر الدولار (صيرفة) تحصل السعر العراقي للغرام. مثال: 3350/31.1 × 1540 ≈ 166,000 دينار للغرام 24!</div>
+      <span class="itag">وحدات الوزن</span></div>
+
+    <div class="ic"><div class="ii">💱</div><div class="it">الفرق بين الأسعار الثلاثة</div>
+      <div class="ix">الرسمي (1,310): للبنوك والحكومة فقط، الأسوأ للمواطن. الصيرفة (1,540): الأفضل للمواطن، متاح بحدود يومية. الموازي (1,480): متغير يومياً، للكميات الكبيرة. الفرق بين الصيرفة والرسمي على 1,000 دولار = 230,000 دينار!</div>
+      <span class="itag">مهم جداً</span></div>
+
+    <div class="ic"><div class="ii">📈</div><div class="it">متى تشتري الذهب؟</div>
+      <div class="ix">أفضل وقت: حين يرتفع الدولار، قبل المناسبات بشهرين، وعند الهدوء السياسي. تجنّب الشراء في العيد والمناسبات لأن الأسعار ترتفع 2–5%. والقاعدة الذهبية: الذهب للادخار الطويل — لا للمضاربة السريعة.</div>
+      <span class="itag">نصيحة ذهبية</span></div>
+
+    <div class="ic"><div class="ii">💎</div><div class="it">أجور الصياغة — تفاصيل البازار</div>
+      <div class="ix">المعدل الطبيعي ببغداد: 3,000–5,500 دينار/غرام. في كردستان والبصرة: 4,000–7,000. الخواتم البسيطة أرخص من القلادات المعقدة. إذا قالوا "الصياغة بالمثقال" اضربها في 4.25 تحصل السعر بالغرام. تفاوض دائماً على الصياغة — الذهب نفسه سعره ثابت.</div>
+      <span class="itag">وفّر مالك</span></div>
+
+    <div class="ic"><div class="ii">🔄</div><div class="it">جديد vs مستعمل vs خردة</div>
+      <div class="ix">الجديد: سعر كامل. المستعمل: خصم 8–12%. الخردة (لبيع الذهب القديم جداً للصهر): خصم 15–25%. إذا أردت بيع ذهبك القديم — اطلب سعر الصهر وليس سعر المستعمل، الفرق كبير. المصوغات الإيطالية والتركية تُباع أحياناً بسعر أعلى إذا كانت محفوظة.</div>
+      <span class="itag">اعرف حقك</span></div>
+
+    <div class="ic"><div class="ii">🛡️</div><div class="it">حماية مدخراتك من التضخم</div>
+      <div class="ix">الخبراء ينصحون: 40% ذهب، 35% دولار (عبر الصيرفة)، 25% ادخار نقدي. تجنّب الاحتفاظ بمبالغ كبيرة بالدينار فقط. والأهم: لا تشتري ذهباً بالدين أو للمضاربة — الذهب للحفاظ على القيمة وليس للربح السريع.</div>
+      <span class="itag">استراتيجية ادخار</span></div>
+
+    <div class="ic"><div class="ii">🏛️</div><div class="it">بورصة الكفاح والحارثية</div>
+      <div class="ix">الكفاح في وسط بغداد والحارثية في غرب بغداد — هما المرجع الرئيسي لأسعار الذهب في العراق. أسعارهما تُحدّد معيار السوق الوطني. أي محل يخالفهم بأكثر من 2,000 دينار/غرام — راجعه. يمكنك أيضاً متابعة مجموعات واتساب الخاصة بأسعار بورصة الكفاح.</div>
+      <span class="itag">المرجع الرسمي</span></div>
+  </div>
+
+  <!-- Glossary -->
+  <div style="margin-top:24px">
+    <div style="font-size:16px;font-weight:600;margin-bottom:14px">📖 قاموس المصطلحات المالية</div>
+    <div class="gi"><div class="gt">منصة الصيرفة (Sayrafa)</div><div class="gd">منصة إلكترونية حكومية تابعة للبنك المركزي العراقي تبيع الدولار للمواطنين بسعر أعلى من الرسمي. السعر الحالي 1,540 دينار/دولار. حد الفرد 250 دولار يومياً و3,000 شهرياً.</div></div>
+    <div class="gi"><div class="gt">سعر الصرف الرسمي</div><div class="gd">السعر الذي يحدده البنك المركزي (1,310 دينار/دولار). يُستخدم في البنوك والمعاملات الحكومية. هو الأسوأ للمواطن الذي يريد تصريف الدولار لأنه أقل من بقية الأسعار.</div></div>
+    <div class="gi"><div class="gt">السوق الموازية</div><div class="gd">تداول العملات خارج القنوات الرسمية. سعره اليوم 1,480 دينار/دولار — أعلى من الرسمي بـ170 دينار لكن أقل من الصيرفة بـ60 دينار. يتغير كل يوم حسب العرض والطلب.</div></div>
+    <div class="gi"><div class="gt">الفارق (Spread)</div><div class="gd">الفرق بين سعر الشراء والبيع. في المصارف المعتمدة عادةً 5–15 دينار/دولار. عند الصراف في الشارع 10–25 دينار. الفارق الكبير يعني خسارة عند كل معاملة.</div></div>
+    <div class="gi"><div class="gt">أونصة تروي (Troy Ounce)</div><div class="gd">وحدة الذهب الدولية = 31.1035 غرام. تختلف عن الأونصة العادية (28.35 غ). كل أسعار البورصات العالمية تُعبّر عنها بالأونصة التروي.</div></div>
+    <div class="gi"><div class="gt">هامش الصياغة</div><div class="gd">مبلغ إضافي على قيمة الذهب الخام يأخذه الصائغ مقابل عمله. لا علاقة له بسعر الذهب. يتراوح في العراق بين 3,000–8,000 دينار/غرام حسب التعقيد.</div></div>
+    <div class="gi"><div class="gt">التضخم</div><div class="gd">انخفاض القوة الشرائية للدينار مع الوقت. إذا التضخم 5% فـ1,000,000 دينار اليوم تعادل 950,000 دينار قوة شرائية العام القادم. لذلك الذهب والدولار أفضل للادخار طويل الأمد.</div></div>
+  </div>
+</section>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+// ══ RATES ══
+const R={off:1310,say:1540,par:1480};
+const GOLD={24:330000,22:302500,21:290000,18:247500,14:192500,10:137500};
+const SILVER=3200;
+let selectedRate='off';
+
+// ══ NAV ══
+function showSec(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('sec-'+id).classList.add('on');
+  document.getElementById('n-'+id)?.classList.add('on');
+  document.querySelectorAll('.mnav .nb').forEach(b=>b.classList.toggle('on',b.getAttribute('onclick')?.includes("'"+id+"'")));
+  if(id==='charts') initCharts();
+  if(id==='currency') renderCurrTables();
+}
+function toggleMnav(){document.getElementById('mnav').classList.toggle('open')}
+
+// ══ TABS ══
+function switchTab(t){
+  ['gold','silver','currency','sayrafa'].forEach(k=>{
+    document.getElementById('form-'+k).style.display=k===t?'block':'none';
+    document.getElementById('tb-'+k).classList.toggle('on',k===t);
+  });
+}
+
+// ══ RATE PICKER ══
+function selRate(r){
+  selectedRate=r;
+  ['off','say','par'].forEach(k=>{
+    const el=document.getElementById('rp-'+k);
+    el.className='rp'+(k===r?' on-'+k:'');
+  });
+  calcCurr();
+}
+
+// ══ GOLD CALC ══
+function calcGold(){
+  const k=parseInt(document.getElementById('g-karat').value);
+  const w=parseFloat(document.getElementById('g-weight').value)||0;
+  const type=document.getElementById('g-type').value;
+  const craft=parseFloat(document.getElementById('g-craft').value)||0;
+  const comm=parseFloat(document.getElementById('g-comm').value)||0;
+  const qty=parseInt(document.getElementById('g-qty').value)||1;
+  if(w<=0) return;
+  const base=GOLD[k];
+  const mul=type==='used'?0.9:type==='scrap'?0.8:1;
+  const gv=w*base*mul*qty;
+  const craftTotal=craft*w*qty;
+  const commAmt=gv*(comm/100);
+  const total=gv+craftTotal+commAmt;
+  document.getElementById('rv-gold').innerHTML=fmt(total)+' <span class="cur">دينار</span>';
+  const rb=document.getElementById('rb-gold');
+  rb.innerHTML=
+    brow('سعر غرام '+k+' عيار',fmt(base)+' د.ع')+
+    brow('الوزن',w+' غ × '+qty+' قطعة')+
+    (type!=='new'?browB('خصم '+(type==='used'?'مستعمل 10%':'خردة 20%'),'-'+fmt(gv/(1-((type==='used'?.1:.2)))*((type==='used'?.1:.2)))+' د.ع'):'')+
+    brow('قيمة الذهب',fmt(gv)+' د.ع')+
+    (craftTotal>0?brow('أجور الصياغة ('+craft.toLocaleString()+' × '+w+'غ × '+qty+')',fmt(craftTotal)+' د.ع'):'')+
+    (commAmt>0?brow('عمولة ('+comm+'%)',fmt(commAmt)+' د.ع'):'')+
+    browT(fmt(total)+' د.ع');
+  document.getElementById('res-gold').classList.add('show');
+  goldAI(k,w,type,craft,comm,gv,total);
+}
+
+function goldAI(k,w,type,craft,comm,gv,total){
+  const tips=[];
+  const normalCraft=4500;
+  if(craft>0){
+    const pct=(craft/GOLD[k]*100).toFixed(1);
+    if(craft>7000) tips.push({t:'bad',m:`🚨 أجور الصياغة ${craft.toLocaleString()} د.ع/غ مرتفعة جداً. المعدل ببغداد 3,000–5,500 — جرب التفاوض.`});
+    else if(craft>normalCraft) tips.push({t:'warn',m:`⚠️ أجور الصياغة مرتفعة قليلاً (${pct}% من قيمة الغرام). يمكن التفاوض.`});
+    else tips.push({t:'ok',m:`✅ أجور الصياغة معقولة (${pct}%). ضمن النطاق الطبيعي.`});
+  }
+  if(comm>5) tips.push({t:'warn',m:`⚠️ عمولة ${comm}% مرتفعة. المكاتب الموثوقة تأخذ 1–3% كحد أقصى.`});
+  if(type==='used') tips.push({t:'info',m:`💡 الذهب المستعمل خُصم 10%. إذا القطعة بحالة ممتازة جرب التفاوض على 5% فقط.`});
+  if(type==='scrap') tips.push({t:'bad',m:`🔥 سعر الخردة يخصم 20%. تأكد من أنهم يحسبون فعلاً بسعر الذهب الحالي وليس سعر قديم.`});
+  if(k===21) tips.push({t:'gold',m:`🟡 21 عيار الأكثر تداولاً. سعر البورصة اليوم ${fmt(GOLD[21])} دينار/غرام.`});
+  if(tips.length===0) tips.push({t:'ok',m:`✅ العملية منطقية. القيمة ${fmt(gv)} دينار تتناسب مع أسعار اليوم.`});
+  setAI(tips);
+}
+
+// ══ SILVER CALC ══
+function calcSilver(){
+  const w=parseFloat(document.getElementById('s-weight').value)||0;
+  const p=parseInt(document.getElementById('s-purity').value);
+  const type=document.getElementById('s-type').value;
+  const craft=parseFloat(document.getElementById('s-craft').value)||0;
+  if(w<=0) return;
+  const mul=type==='used'?0.92:type==='coin'?1.05:1;
+  const sv=w*SILVER*(p/999)*mul;
+  const total=sv+craft;
+  document.getElementById('rv-silver').innerHTML=fmt(total)+' <span class="cur">دينار</span>';
+  document.getElementById('rb-silver').innerHTML=
+    brow('سعر الفضة الخالصة',fmt(SILVER)+' د.ع/غ')+
+    brow('النقاء',p+'/999 = '+(p/999*100).toFixed(1)+'%')+
+    brow('الوزن',w+' غرام')+
+    (type==='coin'?brow('علاوة عملة (+5%)','+'+fmt(sv*0.05)+' د.ع'):'')+
+    (type==='used'?brow('خصم مستعمل (-8%)','-'+fmt(sv/0.92*0.08)+' د.ع'):'')+
+    brow('قيمة الفضة',fmt(sv)+' د.ع')+
+    (craft>0?brow('أجور الصياغة',fmt(craft)+' د.ع'):'')+
+    browT(fmt(total)+' د.ع');
+  document.getElementById('res-silver').classList.add('show');
+  setAI([
+    {t:'info',m:`⚪ الفضة الحالية ${fmt(SILVER)} د.ع/غ. النقاء 925 هو المعيار الأكثر شيوعاً.`},
+    {t:'warn',m:`⚠️ الفضة تفقد قيمة أسرع عند إعادة البيع. الذهب أفضل للادخار طويل الأمد.`}
+  ]);
+}
+
+// ══ CURRENCY CALC ══
+const TO_USD={USD:1,EUR:1.095,GBP:1.27,SAR:0.2667,TRY:0.029,AED:0.2723,KWD:3.25,IRR:0.0000238,IQD:1/1310,CNY:0.1382,INR:0.012,JOD:1.41};
+function calcCurr(){
+  const from=document.getElementById('c-from').value;
+  const amt=parseFloat(document.getElementById('c-amount').value)||0;
+  const to=document.getElementById('c-to').value;
+  document.getElementById('c-unit').textContent=from;
+  if(amt<=0) return;
+  const rate=selectedRate==='say'?R.say:selectedRate==='par'?R.par:R.off;
+  const usd=amt*(TO_USD[from]||1);
+  let res;
+  if(to==='IQD') res=usd*rate;
+  else if(from==='IQD') res=amt/rate/(TO_USD[to]||1);
+  else res=usd/(TO_USD[to]||1);
+  document.getElementById('rv-curr').innerHTML=fd(res,to)+' <span class="cur">'+to+'</span>';
+  // triple comparison
+  if(from!=='IQD'&&to==='IQD'){
+    const offV=usd*R.off,sayV=usd*R.say,parV=usd*R.par;
+    document.getElementById('tri-curr').innerHTML=
+      `<div class="tri-c tri-off"><div class="tri-l">🏛️ رسمي</div><div class="tri-v">${fmt(offV)}</div><div class="tri-d">دينار</div></div>`+
+      `<div class="tri-c tri-say"><div class="tri-l">🏧 صيرفة</div><div class="tri-v">${fmt(sayV)}</div><div class="tri-d">دينار ← أفضل</div></div>`+
+      `<div class="tri-c tri-par"><div class="tri-l">🏪 موازي</div><div class="tri-v">${fmt(parV)}</div><div class="tri-d">دينار</div></div>`;
+  } else document.getElementById('tri-curr').innerHTML='';
+  document.getElementById('rb-curr').innerHTML=
+    brow('المبلغ',amt.toLocaleString()+' '+from)+
+    brow('السعر المستخدم',selectedRate==='say'?'صيرفة ('+R.say+')':selectedRate==='par'?'موازي ('+R.par+')':'رسمي ('+R.off+')')+
+    (from!=='IQD'?brow('المعادل بالدولار',fd(usd,null)+' USD'):'')+
+    browT(fd(res,to)+' '+to);
+  document.getElementById('res-curr').classList.add('show');
+  setAI([
+    {t:'say',m:`🏧 الصيرفة تعطيك ${fmt(usd*R.say)} دينار لكل ${fmt(usd*100/100)} دولار — أفضل خيار متاح.`},
+    {t:'warn',m:`⚠️ فرق الصيرفة عن الرسمي = ${fmt((R.say-R.off)*usd)} دينار على هذه الصفقة.`},
+    selectedRate!=='say'?{t:'info',m:`💡 اضغط على "صيرفة" لتحسب بأفضل سعر.`}:{t:'ok',m:`✅ تستخدم سعر الصيرفة — هذا هو الأمثل.`}
+  ]);
+}
+
+// ══ SAYRAFA CALC ══
+function calcSayrafa(){
+  const usd=parseFloat(document.getElementById('say-usd').value)||0;
+  if(usd<=0) return;
+  const offV=usd*R.off,sayV=usd*R.say,parV=usd*R.par;
+  document.getElementById('tri-say').innerHTML=
+    `<div class="tri-c tri-off"><div class="tri-l">🏛️ رسمي</div><div class="tri-v">${fmt(offV)}</div><div class="tri-d">+0 (الأقل)</div></div>`+
+    `<div class="tri-c tri-say"><div class="tri-l">🏧 صيرفة ★</div><div class="tri-v">${fmt(sayV)}</div><div class="tri-d">+${fmt(sayV-offV)} عن الرسمي</div></div>`+
+    `<div class="tri-c tri-par"><div class="tri-l">🏪 موازي</div><div class="tri-v">${fmt(parV)}</div><div class="tri-d">${parV>sayV?'+ أعلى':'أقل من الصيرفة'}</div></div>`;
+  document.getElementById('rb-say').innerHTML=
+    brow('المبلغ',usd.toLocaleString()+' USD')+
+    brow('ربحك بالصيرفة عن الرسمي',fmt(sayV-offV)+' د.ع')+
+    brow('فرق الصيرفة/موازي',fmt(Math.abs(sayV-parV))+' د.ع')+
+    brow('الحد اليومي للصيرفة','250 دولار')+
+    (usd>250?browB('⚠️ يتجاوز الحد اليومي','يحتاج '+Math.ceil(usd/250)+' أيام'):'')+
+    browT(fmt(sayV)+' دينار (بالصيرفة)');
+  document.getElementById('res-say').classList.add('show');
+  setAI([
+    {t:'say',m:`🏧 على ${usd}$: الصيرفة أفضل بـ${fmt(sayV-offV)} دينار عن الرسمي و${fmt(Math.abs(sayV-parV))} ${sayV>parV?'أعلى من':'عن'} الموازي.`},
+    usd>250?{t:'warn',m:`⚠️ ${usd}$ يتجاوز حد الصيرفة اليومي (250$). ستحتاج ${Math.ceil(usd/250)} أيام.`}:{t:'ok',m:`✅ ${usd}$ ضمن الحد اليومي (250$). يمكنك صرفه اليوم.`}
+  ]);
+}
+
+// ══ HELPERS ══
+function brow(l,v){return`<div class="brow"><span class="bl">${l}</span><span class="bv">${v}</span></div>`}
+function browB(l,v){return`<div class="brow"><span class="bl">${l}</span><span class="bv" style="color:var(--bad)">${v}</span></div>`}
+function browT(v){return`<div class="brow" style="border-top:1px solid var(--goldBorder);margin-top:8px;padding-top:10px"><span class="bl" style="font-weight:700;color:var(--t1)">الإجمالي</span><span class="bv" style="color:var(--gold);font-size:17px">${v}</span></div>`}
+function fmt(n){return Math.round(n).toLocaleString('ar-IQ')}
+function fd(n,code){if(!code||code==='IQD')return Math.round(n).toLocaleString('ar-IQ');if(n<1)return n.toFixed(4);if(n<100)return n.toFixed(2);return Math.round(n).toLocaleString('ar-IQ')}
+function setAI(tips){document.getElementById('ai-tips').innerHTML=tips.map(t=>`<div class="tip ${t.t}">${t.m}</div>`).join('')}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
+function copyResult(id){const e=document.getElementById('rv-'+id);navigator.clipboard?.writeText(e.textContent.trim()).then(()=>showToast('✅ تم النسخ!'))}
+function shareResult(id){const e=document.getElementById('rv-'+id);const txt='قيمة: '+e.textContent.trim()+' — من منصة دينار وذهب';navigator.share?navigator.share({text:txt}):navigator.clipboard?.writeText(txt).then(()=>showToast('✅ تم النسخ!'))}
+
+// ══ ALERTS ══
+let alerts=[];
+try{alerts=JSON.parse(localStorage.getItem('dw_al')||'[]')}catch(e){}
+function renderAlerts(){
+  document.getElementById('alert-list').innerHTML=alerts.map((a,i)=>
+    `<div class="ali"><span>🔔 تنبيه عند ${fmt(a)} د.ع</span><button class="ald" onclick="delAlert(${i})">✕</button></div>`
+  ).join('');
+}
+function addAlert(){
+  const v=parseFloat(document.getElementById('alert-p').value);
+  if(!v||v<100000) return showToast('أدخل سعراً صحيحاً');
+  alerts.push(v);try{localStorage.setItem('dw_al',JSON.stringify(alerts))}catch(e){}
+  renderAlerts();document.getElementById('alert-p').value='';showToast('✅ تنبيه '+fmt(v));
+}
+function delAlert(i){alerts.splice(i,1);try{localStorage.setItem('dw_al',JSON.stringify(alerts))}catch(e){}renderAlerts()}
+renderAlerts();
+
+// ══ PROVINCE GRID ══
+const PROVS=[
+  {n:'بغداد — الكفاح ⭐',p:290000},{n:'بغداد — الحارثية ⭐',p:289500},
+  {n:'البصرة',p:291000},{n:'الموصل',p:290500},{n:'أربيل',p:292000},
+  {n:'النجف',p:290000},{n:'كركوك',p:291500},{n:'السليمانية',p:292500},
+  {n:'كربلاء',p:289500},{n:'الناصرية',p:290200},{n:'الحلة',p:289800},{n:'الرمادي',p:291200},
+];
+(function(){
+  const ref=290000;
+  document.getElementById('prov-grid').innerHTML=PROVS.map(p=>{
+    const d=p.p-ref;const cls=d===0?'nt':d>0?'up':'dn';
+    return`<div class="pc"><div class="pn">${p.n}</div><div class="pp">${fmt(p.p)}</div><div class="pd ${cls}">${d===0?'≡ المرجع':(d>0?'+':'')+d.toLocaleString()+' د.ع'}</div></div>`;
+  }).join('');
+})();
+
+// ══ CURRENCY TABLES ══
+const CURR_DATA=[
+  {flag:'🇺🇸',name:'دولار أمريكي',code:'USD',obuy:1308,osell:1312,say:1540,pbuy:1475,psell:1485,chg:0},
+  {flag:'🇪🇺',name:'يورو',code:'EUR',obuy:1428,osell:1440,say:1686,pbuy:1616,psell:1630,chg:0.28},
+  {flag:'🇬🇧',name:'جنيه إسترليني',code:'GBP',obuy:1658,osell:1670,say:1956,pbuy:1877,psell:1895,chg:-0.18},
+  {flag:'🇸🇦',name:'ريال سعودي',code:'SAR',obuy:348,osell:350,say:411,pbuy:392,psell:396,chg:0},
+  {flag:'🇦🇪',name:'درهم إماراتي',code:'AED',obuy:355,osell:358,say:420,pbuy:400,psell:404,chg:0},
+  {flag:'🇰🇼',name:'دينار كويتي',code:'KWD',obuy:4220,osell:4250,say:5005,pbuy:4810,psell:4840,chg:0.12},
+  {flag:'🇹🇷',name:'ليرة تركية',code:'TRY',obuy:37,osell:38,say:45,pbuy:43,psell:44,chg:-1.3},
+  {flag:'🇮🇷',name:'تومان إيراني',code:'IRR',obuy:0.030,osell:0.031,say:0.037,pbuy:0.035,psell:0.036,chg:-0.5},
+];
+const GLOBAL=[
+  {flag:'🇺🇸',name:'الولايات المتحدة',code:'USD',say:1540,off:1310,par:1480,chg:0},
+  {flag:'🇪🇺',name:'منطقة اليورو',code:'EUR',say:1686,off:1434,par:1620,chg:0.28},
+  {flag:'🇬🇧',name:'بريطانيا',code:'GBP',say:1956,off:1664,par:1880,chg:-0.18},
+  {flag:'🇸🇦',name:'السعودية',code:'SAR',say:411,off:349,par:395,chg:0},
+  {flag:'🇦🇪',name:'الإمارات',code:'AED',say:420,off:357,par:402,chg:0},
+  {flag:'🇰🇼',name:'الكويت',code:'KWD',say:5005,off:4256,par:4820,chg:0.12},
+  {flag:'🇹🇷',name:'تركيا',code:'TRY',say:45,off:38,par:43,chg:-1.3},
+  {flag:'🇨🇳',name:'الصين',code:'CNY',say:213,off:181,par:204,chg:0.42},
+  {flag:'🇮🇳',name:'الهند',code:'INR',say:18.5,off:15.7,par:17.8,chg:-0.5},
+  {flag:'🇯🇴',name:'الأردن',code:'JOD',say:2174,off:1850,par:2088,chg:0.11},
+];
+function renderCurrTables(){
+  if(document.getElementById('tbl-main').innerHTML) return;
+  document.getElementById('tbl-main').innerHTML=CURR_DATA.map(r=>{
+    const spread=r.psell-r.pbuy;
+    const sayDiff=r.say-r.obuy;
+    return`<tr>
+      <td><div class="cflag"><span class="flag">${r.flag}</span><div><div style="font-weight:600;font-size:13px">${r.name}</div><div style="font-size:10.5px;color:var(--t3)">${r.code}</div></div></div></td>
+      <td style="color:var(--ok)">${r.obuy.toLocaleString()} / <span style="opacity:.7">${r.osell.toLocaleString()}</span></td>
+      <td style="color:var(--sayrafa);font-weight:700">${r.say.toLocaleString()}</td>
+      <td style="color:var(--warn)">${r.pbuy.toLocaleString()} / <span style="opacity:.7">${r.psell.toLocaleString()}</span></td>
+      <td><span class="spread">+${sayDiff.toLocaleString()}</span></td>
+      <td><span class="rbg ${r.chg>0?'up':r.chg<0?'dn':'nt'}">${r.chg>0?'+':''}${r.chg}%</span></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('tbl-global').innerHTML=GLOBAL.map(r=>{
+    const fmt2=(n)=>n>=1?Math.round(n).toLocaleString('ar-IQ'):n.toFixed(3);
+    return`<tr>
+      <td><div class="cflag"><span class="flag">${r.flag}</span>${r.name}</div></td>
+      <td style="color:var(--t3);font-size:11.5px">${r.code}</td>
+      <td style="color:var(--sayrafa);font-weight:700">${fmt2(r.say)}</td>
+      <td style="color:var(--ok)">${fmt2(r.off)}</td>
+      <td style="color:var(--warn)">${fmt2(r.par)}</td>
+      <td><span class="rbg ${r.chg>0?'up':r.chg<0?'dn':'nt'}">${r.chg>0?'+':''}${r.chg.toFixed(2)}%</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// ══ CHARTS ══
+let chartsInit=false,goldChart=null;
+const gc=(c)=>({r:'rgba(201,162,39,.8)',l:'rgba(201,162,39,.5)'}[c]||c);
+function genD(base,days,vol){
+  const d=[],l=[];let p=base;const now=new Date();
+  for(let i=days;i>=0;i--){
+    const dt=new Date(now);dt.setDate(dt.getDate()-i);
+    l.push(dt.toLocaleDateString('ar-IQ',{month:'short',day:'numeric'}));
+    p+=(Math.random()-.49)*vol;p=Math.max(base*.93,Math.min(base*1.07,p));
+    d.push(Math.round(p));
+  }
+  return{d,l};
+}
+function mkLine(id,datasets,labels){
+  return new Chart(document.getElementById(id),{type:'line',
+    data:{labels,datasets},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:datasets.length>1,position:'bottom',labels:{color:'#A0A0B0',font:{family:'Cairo'},boxWidth:10,padding:14}}},
+      scales:{
+        y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#505065',font:{family:'Cairo'},callback:v=>v>=10000?(v/1000).toFixed(0)+'K':v}},
+        x:{grid:{color:'rgba(255,255,255,.03)'},ticks:{color:'#505065',font:{family:'Cairo'},maxTicksLimit:8,autoSkip:true}}
+      }
+    }
+  });
+}
+function initCharts(){
+  if(chartsInit) return;chartsInit=true;
+  const g=genD(290000,7,2000);
+  goldChart=mkLine('ch-gold',[{data:g.d,borderColor:'#C9A227',backgroundColor:'rgba(201,162,39,.08)',fill:true,tension:.4,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#C9A227',pointHoverRadius:6}],g.l);
+  // 3-rate USD chart
+  const lbl=genD(1310,30,0).l;
+  const offD=genD(1310,30,2).d;
+  const sayD=genD(1540,30,15).d;
+  const parD=genD(1480,30,12).d;
+  mkLine('ch-usd3',[
+    {data:offD,borderColor:'var(--ok)',backgroundColor:'transparent',tension:.4,borderWidth:2,pointRadius:0,label:'رسمي'},
+    {data:sayD,borderColor:'var(--sayrafa)',backgroundColor:'rgba(0,196,255,.06)',fill:true,tension:.4,borderWidth:2,pointRadius:0,label:'صيرفة'},
+    {data:parD,borderColor:'var(--warn)',backgroundColor:'transparent',tension:.4,borderWidth:2,pointRadius:0,label:'موازي'}
+  ],lbl);
+  const s=genD(3200,7,60);
+  mkLine('ch-silver',[{data:s.d,borderColor:'#A0A0B0',backgroundColor:'rgba(160,160,180,.07)',fill:true,tension:.4,borderWidth:2,pointRadius:2,pointBackgroundColor:'#A0A0B0'}],s.l);
+  const o=genD(8500,7,200);
+  mkLine('ch-oil',[{data:o.d,borderColor:'var(--info)',backgroundColor:'rgba(52,152,219,.07)',fill:true,tension:.4,borderWidth:2,pointRadius:2,pointBackgroundColor:'var(--info)'}],o.l);
+  // Spread chart
+  const spreadLbl=[];const spreadD=[];
+  const now2=new Date();
+  for(let i=29;i>=0;i--){const dt=new Date(now2);dt.setDate(dt.getDate()-i);spreadLbl.push(dt.toLocaleDateString('ar-IQ',{month:'short',day:'numeric'}));spreadD.push(Math.round(55+Math.random()*20));}
+  new Chart(document.getElementById('ch-spread'),{type:'line',
+    data:{labels:spreadLbl,datasets:[{data:spreadD,borderColor:'var(--sayrafa)',backgroundColor:'rgba(0,196,255,.08)',fill:true,tension:.4,borderWidth:2,pointRadius:0,label:'فارق الصيرفة–الموازي'}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#505065',font:{family:'Cairo'}}},x:{grid:{display:false},ticks:{color:'#505065',font:{family:'Cairo'},maxTicksLimit:8,autoSkip:true}}}}
+  });
+  // Buy/Sell bar
+  const m=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو'];
+  new Chart(document.getElementById('ch-buysell'),{type:'bar',
+    data:{labels:m,datasets:[
+      {label:'شراء',data:[282000,285000,286500,288000,289500,290000,292000],backgroundColor:'rgba(39,174,96,.7)',borderRadius:4},
+      {label:'بيع',data:[284000,287000,288500,290000,291500,292000,294000],backgroundColor:'rgba(201,162,39,.7)',borderRadius:4}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#A0A0B0',font:{family:'Cairo'},boxWidth:10}}},
+      scales:{y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#505065',font:{family:'Cairo'},callback:v=>v.toLocaleString('ar-IQ')}},x:{grid:{display:false},ticks:{color:'#505065',font:{family:'Cairo'}}}}}
+  });
+}
+function updGold(p,btn){
+  document.querySelectorAll('.pb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  const days={d7:7,d30:30,d90:90,d1y:365}['d'+p.replace('d','')]||7;
+  const vol={d7:2000,d30:6000,d90:12000,d1y:22000}['d'+p.replace('d','')]||2000;
+  const nd=genD(290000,days,vol);
+  goldChart.data.labels=nd.l;goldChart.data.datasets[0].data=nd.d;goldChart.update();
+}
+
+// ══ LIVE SIM ══
+function tick(){
+  const v=(Math.random()-.49)*600;
+  GOLD[21]=Math.round(290000+v);GOLD[24]=Math.round(330000+v*1.14);
+  const g21f=GOLD[21].toLocaleString('ar-IQ');
+  document.getElementById('t-g21').textContent=g21f;
+  document.getElementById('mc-g21').textContent=g21f;
+  document.getElementById('mc-g24').textContent=GOLD[24].toLocaleString('ar-IQ');
+  document.getElementById('last-upd').textContent=new Date().toLocaleTimeString('ar-IQ',{hour:'2-digit',minute:'2-digit'});
+  const el=document.getElementById('mc-g21');
+  el.style.color=v>0?'var(--ok)':'var(--bad)';
+  setTimeout(()=>el.style.color='var(--t1)',900);
+  // sayrafa small fluctuation
+  R.say=1540+Math.round((Math.random()-.5)*5);
+  document.getElementById('t-say').textContent=R.say.toLocaleString('ar-IQ');
+  document.getElementById('rc-say').textContent=R.say.toLocaleString('ar-IQ');
+  document.getElementById('ex-say').textContent=R.say.toLocaleString('ar-IQ');
+  document.getElementById('ex-say-100').textContent=(R.say*100).toLocaleString('ar-IQ');
+}
+// OFFLINE
+function chkOnline(){document.getElementById('offb').classList.toggle('show',!navigator.onLine)}
+window.addEventListener('online',chkOnline);window.addEventListener('offline',chkOnline);chkOnline();
+// INIT
+document.getElementById('last-upd').textContent=new Date().toLocaleTimeString('ar-IQ',{hour:'2-digit',minute:'2-digit'});
+setInterval(tick,20000);
+</script>
+</body>
+</html>

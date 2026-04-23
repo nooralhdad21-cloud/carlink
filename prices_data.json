@@ -1,0 +1,23 @@
+{
+  "success": true,
+  "timestamp": "2025-01-01T00:00:00Z",
+  "prices": {
+    "dollar": {
+      "official": 1310,
+      "sayrafa": 1540,
+      "parallel": null
+    },
+    "gold": {
+      "gold_24": 330000,
+      "gold_21": 290000,
+      "gold_18": 247500
+    },
+    "silver": 3200
+  },
+  "sources": {
+    "official": "Central Bank of Iraq (cbi.iq)",
+    "sayrafa": "Sayrafa Platform (cbi.iq/sayrafa)",
+    "parallel": "Bursa Al-Kifah & Al-Harithiya",
+    "gold": "Local Market"
+  }
+}
