@@ -1,65 +1,50 @@
-# Iraqi Dinar Price Sync System
+# React + TypeScript + Vite
 
-## 🎯 نظرة عامة
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-هذا النظام يوفر تحديث تلقائي لأسعار صرف الدينار العراقي والدولار والذهب.
+Currently, two official plugins are available:
 
-## 📁 الملفات
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-- `telegram_bot.py` - بوت التيليگرام لتحديث الأسعار
-- `price_sync.py` - نظام مزامنة الأسعار
-- `scraper.py` - أداة جلب الأسعار من الإنترنت
-- `app.py` - خادم API (للتحديثات تلقائياً)
-- `prices_data.json` - ملف البيانات (تحدث من البوت)
-- `prices.html` - الصفحة الرئيسية (للتحديث التلقائي)
+## Expanding the ESLint configuration
 
-## 🚀 طريقة التشغيل
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-### 1. تشغيل البوت (لتحديث يدوي)
-```bash
-pip install python-telegram-bot
-python telegram_bot.py
+- Configure the top-level `parserOptions` property like this:
+
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
 ```
 
-### 2. تشغيل خادم API (للنشر)
-```bash
-pip install flask
-python app.py
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
+
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
 ```
-
-## 📱 أوامر البوت
-
-- `/start` - بدء
-- `/prices` - عرض الأسعار
-- `/update parallel 1555` - تحديث السعر الموازي
-- `/update sayrafa 1540` - تحديث سعر صيرفة
-- `/update gold21 290000` - تحديث ذهب 21 عيار
-
-## 🔗 الروابط المهمة
-
-- البوت: https://t.me/MyWebSync_Bot
-- البنك المركزي: https://cbi.iq
-- منصة صيرفة: https://cbi.iq/sayrafa
-- بورصة الكفاح: https://t.me/dollarirq
-- بيش الدولار: https://t.me/iqborsa
-
-## ⚡ التحديث التلقائي
-
-للأسف،_channels التيليگرام ما عنديهم API عام.
-الحلول المتاحة:
-
-1. **تحديث يدوي** - شخص يبعث السعر للبوت
-2. **GitHub Actions** - جدولة تحديث كل ساعة
-3. **استضافة Python** - Railway/Render/Heroku
-
-## 📊 الحالة الحالية
-
-| السعر | القيمة | المصدر |
-|-------|--------|--------|
-| رسمي | 1,310 | البنك المركزي |
-| صيرفة | 1,540 | منصة صيرفة |
-| موازي | -- | يحتاج تحديث |
-| ذهب 21 | 290,000 | سوق محلية |
-
----
-**ملاحظة:** لتحديث السعر الموازي، أرسل رسالة للبوت: `/update parallel 1555`
